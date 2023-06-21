@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="import" href="./icons.svg" />
+    <title>toddy - weather, 18°</title>
+  </head>
+  <body>
+    <div id="app">
+      <div class="container">
+        <nav class="nav">
+          <div class="logo"></div>
+          <ul class="menu-items" data-type="nav-menu">
+            <li class="menu-item" title="Todo App!" data-btn="todo">
+              <div class="i-s i-todo"></div>
+            </li>
+            <li
+              class="menu-item active"
+              title="Weather App!"
+              data-btn="weather"
+            >
+              <div class="i-s i-weather"></div>
+            </li>
+            <li class="menu-item" title="Timer App!" data-btn="timer">
+              <div class="i-s i-timers"></div>
+            </li>
+            <li class="menu-item" title="YesNo App!" data-btn="yesno">
+              <div class="i-s i-idea"></div>
+            </li>
+          </ul>
+        </nav>
+        <main class="content weather" id="weather">
+          <div class="weather-wrapper">
+            <section class="upper-block">
+              <div class="upper-block_header">
+                <div class="location">Turar Ryskulov</div>
+                <div class="change-bg-btn">next →</div>
+              </div>
+              <div class="upper-block_content">
+                <ul class="holidays">
+                  <li class="holiday">
+                    <div class="holiday-date">14.05.2022</div>
+                    <div class="holiday-description">- First holiday</div>
+                  </li>
+                  <li class="holiday">
+                    <div class="holiday-date">14.05.2022</div>
+                    <div class="holiday-description">- Second holiday</div>
+                  </li>
+                  <li class="holiday">
+                    <div class="holiday-date">14.05.2022</div>
+                    <div class="holiday-description">- Third holiday</div>
+                  </li>
+                  <li class="holiday">
+                    <div class="holiday-date">14.05.2022</div>
+                    <div class="holiday-description">- Fourth holiday</div>
+                  </li>
+                  <li class="holiday">
+                    <div class="holiday-date">14.05.2022</div>
+                    <div class="holiday-description">- Fifth holiday</div>
+                  </li>
+                </ul>
+              </div>
+            </section>
+            <section class="main-block">
+              <ul class="weather-info">
+                <li class="current-weather">
+                  <div class="weather-icon"></div>
+                  <div class="weather-description">
+                    <div class="weather-type">now, Cloudy</div>
+                    <div class="weather-temp">18°</div>
+                    <div class="weather-humidity">Humidity: <b>42%</b></div>
+                    <div class="weather-wind">Wind: <b>3km/h</b></div>
+                  </div>
+                </li>
+                <li class="next-day-weather">
+                  <div class="weather-icon"></div>
+                  <div class="weather-description">
+                    <div class="weather-type">thu</div>
+                    <div class="weather-temp">18°</div>
+                  </div>
+                </li>
+                <li class="next-day-weather">
+                  <div class="weather-icon"></div>
+                  <div class="weather-description">
+                    <div class="weather-type">thu</div>
+                    <div class="weather-temp">18°</div>
+                  </div>
+                </li>
+                <li class="next-day-weather">
+                  <div class="weather-icon"></div>
+                  <div class="weather-description">
+                    <div class="weather-type">thu</div>
+                    <div class="weather-temp">18°</div>
+                  </div>
+                </li>
+                <li class="next-day-weather">
+                  <div class="weather-icon"></div>
+                  <div class="weather-description">
+                    <div class="weather-type">thu</div>
+                    <div class="weather-temp">18°</div>
+                  </div>
+                </li>
+              </ul>
+            </section>
+          </div>
+        </main>
+        <aside class="info">
+          <div id="time"><p>18:45</p></div>
+          <div id="weekday"><p>Monday</p></div>
+          <div id="date"><p>25 January, 2022</p></div>
+        </aside>
+      </div>
+    </div>
+  </body>
+</html>

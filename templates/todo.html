@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="import" href="./icons.svg" />
+    <title>toddy - todo</title>
+  </head>
+  <body>
+    <div id="app">
+      <div class="container">
+        <nav class="nav">
+          <div class="logo"></div>
+          <ul class="menu-items" data-type="nav-menu">
+            <li class="menu-item" title="Todo App!" data-btn="todo">
+              <div class="i-s i-todo"></div>
+            </li>
+            <li class="menu-item" title="Weather App!" data-btn="weather">
+              <div class="i-s i-weather"></div>
+            </li>
+            <li class="menu-item" title="Timer App!" data-btn="timer">
+              <div class="i-s i-timers"></div>
+            </li>
+            <li class="menu-item" title="YesNo App!" data-btn="yesno">
+              <div class="i-s i-idea"></div>
+            </li>
+          </ul>
+        </nav>
+        <main class="content todo" id="todo">
+          <div class="task-wrapper">
+            <div class="task-block" data-type="todo">
+              <div class="task-block_header">
+                <div class="task-block_name">&#128529; todo</div>
+                <button class="task-block_add-btn">+add</button>
+              </div>
+              <div class="task-block_content">
+                <div class="task-item">
+                  <div class="task-item_text"></div>
+                  <button class="task-item_delete-btn"></button>
+                </div>
+              </div>
+              <div class="task-block_footer">
+                <button class="task-block_delete-btn">clear all</button>
+              </div>
+            </div>
+            <div class="task-block" data-type="todo">
+              <div class="task-block_header">
+                <div class="task-block_name">&#128529; todo</div>
+                <button class="task-block_add-btn">+add</button>
+              </div>
+              <div class="task-block_content">
+                <div class="task-item">
+                  <div
+                    class="task-item_text"
+                    contenteditable="true"
+                    data-ph="Start typing your task..."
+                  ></div>
+                  <button class="task-item_delete-btn i-m i-trash"></button>
+                </div>
+                <div class="task-item">
+                  <div class="task-item_text" title="Double click for edit">
+                    Сделать задачу ав ола лльувм щл ввв уукму умукм укмук уцмва
+                    муму мукм укму мук щлщумщ щдцывм
+                  </div>
+                  <button class="task-item_delete-btn i-m i-trash"></button>
+                </div>
+              </div>
+              <div class="task-block_footer">
+                <button class="task-block_delete-btn">clear all</button>
+              </div>
+            </div>
+            <div class="task-block" data-type="todo">
+              <div class="task-block_header">
+                <div class="task-block_name">&#128529; todo</div>
+                <button class="task-block_add-btn">+add</button>
+              </div>
+              <div class="task-block_content"></div>
+              <div class="task-block_footer">
+                <button class="task-block_delete-btn">clear all</button>
+              </div>
+            </div>
+          </div>
+        </main>
+        <aside class="info">
+          <div id="time"><p>18:45</p></div>
+          <div id="weekday"><p>Monday</p></div>
+          <div id="date"><p>25 January, 2022</p></div>
+        </aside>
+      </div>
+    </div>
+  </body>
+</html>

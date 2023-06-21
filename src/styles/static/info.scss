@@ -1,0 +1,31 @@
+@import '../variables';
+
+.info {
+  justify-content: center;
+  align-items: center;
+  flex-direction: column-reverse;
+  p {
+    font-size: 24px;
+    font-weight: bold;
+    color: rgb(255, 255, 255, 0.8);
+    writing-mode: vertical-lr;
+    display: inline-block;
+    text-align: center;
+    transform: scale(-1, -1);
+
+    &::after {
+      content: '/';
+      color: $t-color-2;
+      margin: 5px 0;
+      font-weight: 900;
+    }
+  }
+
+  #date {
+    p {
+      &::after {
+        content: '';
+      }
+    }
+  }
+}

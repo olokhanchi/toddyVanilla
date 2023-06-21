@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="import" href="./icons.svg" />
+    <title>toddy - alarm - 04:51 left</title>
+  </head>
+  <body>
+    <div id="app">
+      <div class="container">
+        <nav class="nav">
+          <div class="logo"></div>
+          <ul class="menu-items" data-type="nav-menu">
+            <li class="menu-item" title="Todo App!" data-btn="todo">
+              <div class="i-s i-todo"></div>
+            </li>
+            <li class="menu-item" title="Weather App!" data-btn="weather">
+              <div class="i-s i-weather"></div>
+            </li>
+            <li class="menu-item active" title="Timer App!" data-btn="timer">
+              <div class="i-s i-timers"></div>
+            </li>
+            <li class="menu-item" title="YesNo App!" data-btn="yesno">
+              <div class="i-s i-idea"></div>
+            </li>
+          </ul>
+        </nav>
+        <main class="content timer" id="timer">
+          <div class="timer-wrapper">
+            <nav class="timer-nav">
+              <ul class="timer-nav_btns">
+                <li class="nav-btn active">
+                  <div class="i-s i-alarm"></div>
+                  <div class="label">Alarm clock</div>
+                </li>
+                <li class="nav-btn">
+                  <div class="i-s i-timer"></div>
+                  <div class="label">Timer</div>
+                </li>
+                <li class="nav-btn">
+                  <div class="i-s i-swatch"></div>
+                  <div class="label">Stopwatch</div>
+                </li>
+                <li class="nav-btn">
+                  <div class="i-s i-pomodoro"></div>
+                  <div class="label">Pomodoro</div>
+                </li>
+              </ul>
+            </nav>
+            <main class="timer-content">
+              <section class="alarm-config">
+                <div class="timer current-time">18:52:51</div>
+                <div class="alarm-form">
+                  <div class="hours input-field">
+                    <input
+                      class="input"
+                      placeholder="hours"
+                      type="number"
+                      min="0"
+                      max="23"
+                    />
+                  </div>
+                  <div class="minutes input-field">
+                    <input
+                      class="input"
+                      placeholder="minutes"
+                      aria-description="ffdf"
+                      type="number"
+                      min="0"
+                      max="59"
+                    />
+                  </div>
+                  <div class="seconds input-field">
+                    <input
+                      class="input"
+                      placeholder="seconds"
+                      type="number"
+                      min="0"
+                      max="59"
+                    />
+                  </div>
+                  <div class="sound select-field">
+                    <select class="select">
+                      <option value="1">sound 1</option>
+                      <option value="1">sound 1</option>
+                      <option value="1">sound 1</option>
+                      <option value="1">sound 1</option>
+                      <option value="1">sound 1</option>
+                    </select>
+                    <div class="play"></div>
+                  </div>
+                  <div class="name input-field">
+                    <input class="input" type="text" placeholder="name" />
+                  </div>
+                </div>
+                <button class="btn set-btn">Set alarm</button>
+
+                <ul class="alarm-examples examples">
+                  <li class="example i-s i-alarm">00:00</li>
+                  <li class="example i-s i-alarm">00:00</li>
+                  <li class="example i-s i-alarm">00:00</li>
+                  <li class="example i-s i-alarm">00:00</li>
+                  <li class="example i-s i-alarm">00:00</li>
+                  <li class="example i-s i-alarm">00:00</li>
+                  <li class="example i-s i-alarm">00:00</li>
+                  <li class="example i-s i-alarm">00:00</li>
+                  <li class="example i-s i-alarm">00:00</li>
+                  <li class="example i-s i-alarm">00:00</li>
+                  <li class="example i-s i-alarm">00:00</li>
+                  <li class="example i-s i-alarm">00:00</li>
+                  <li class="example i-s i-alarm">00:00</li>
+                  <li class="example i-s i-alarm">00:00</li>
+                  <li class="example i-s i-alarm">00:00</li>
+                  <li class="example i-s i-alarm">00:00</li>
+                  <li class="example i-s i-alarm">00:00</li>
+                  <li class="example i-s i-alarm">00:00</li>
+                  <li class="example i-s i-alarm">00:00</li>
+                  <li class="example i-s i-alarm">00:00</li>
+                  <li class="example i-s i-alarm">00:00</li>
+                  <li class="example i-s i-alarm">00:00</li>
+                  <li class="example i-s i-alarm">00:00</li>
+                  <li class="example i-s i-alarm">00:00</li>
+                </ul>
+              </section>
+              <section class="alarm-list">
+                <div class="table-name">Alarms</div>
+                <ul class="alarm-items">
+                  <li class="alarm-list_header">
+                    <div class="item-name">Name</div>
+                    <div class="item-time">Alarm time</div>
+                    <div class="item-time_left">Time left</div>
+                  </li>
+                  <li class="alarm-item">
+                    <div class="item-delete i-s i-trash"></div>
+                    <div class="item-name">Alarm 1</div>
+                    <div class="item-time">14:22</div>
+                    <div class="item-time_left">01:33:24</div>
+                  </li>
+                  <li class="alarm-item">
+                    <div class="item-delete i-s i-trash"></div>
+                    <div class="item-name">Alarm 1</div>
+                    <div class="item-time">14:22</div>
+                    <div class="item-time_left">01:33:24</div>
+                  </li>
+                  <li class="alarm-item">
+                    <div class="item-delete i-s i-trash"></div>
+                    <div class="item-name">Alarm 1</div>
+                    <div class="item-time">14:22</div>
+                    <div class="item-time_left">01:33:24</div>
+                  </li>
+                  <li class="alarm-item">
+                    <div class="item-delete i-s i-trash"></div>
+                    <div class="item-name">Alarm 1</div>
+                    <div class="item-time">14:22</div>
+                    <div class="item-time_left">01:33:24</div>
+                  </li>
+                </ul>
+              </section>
+            </main>
+          </div>
+        </main>
+        <aside class="info">
+          <div id="time"><p>18:45</p></div>
+          <div id="weekday"><p>Monday</p></div>
+          <div id="date"><p>25 January, 2022</p></div>
+        </aside>
+      </div>
+    </div>
+  </body>
+</html>

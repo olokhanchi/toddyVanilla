@@ -1,0 +1,39 @@
+@import '../variables';
+
+.yesno-wrapper {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  flex-grow: 1;
+}
+
+.header-title {
+  margin-bottom: 10px;
+}
+
+.yesno-header {
+  font-size: 28px;
+  color: $t-color-1;
+  font-weight: bold;
+  text-align: center;
+}
+
+.set-btn {
+  margin-bottom: 20px;
+}
+
+.answer {
+  color: rgb(0, 0, 0);
+  font-size: 42px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.img {
+  border-radius: 20px;
+  box-shadow: $shadow-o-main;
+  width: 100%;
+  height: auto;
+}
