@@ -332,6 +332,7 @@
 .pomodoro-config {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
   margin-bottom: 10px;
   width: 100%;
@@ -341,5 +342,6 @@
   .input-field {
     flex-grow: 1;
     width: auto;
+    margin-bottom: 0;
   }
 }
