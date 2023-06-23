@@ -41,6 +41,10 @@
               <div class="i-s i-idea"></div>
             </a>
           </div>
+          <div class="theme">
+            <div class="dark">D</div>
+            <div class="light">L</div>
+          </div>
         </nav>
 
         <div id="pages">
@@ -104,26 +108,26 @@
             <div class="timer-wrapper">
               <nav class="timer-nav">
                 <ul class="timer-nav_btns">
-                  <li class="nav-btn active">
+                  <li data-timer-btn="alarm" class="nav-btn active">
                     <div class="i-s i-alarm"></div>
                     <div class="label">Alarm clock</div>
                   </li>
-                  <li class="nav-btn">
+                  <li data-timer-btn="timer" class="nav-btn">
                     <div class="i-s i-timer"></div>
                     <div class="label">Timer</div>
                   </li>
-                  <li class="nav-btn">
+                  <li data-timer-btn="stopwatch" class="nav-btn">
                     <div class="i-s i-swatch"></div>
                     <div class="label">Stopwatch</div>
                   </li>
-                  <li class="nav-btn">
+                  <li data-timer-btn="pomodoro" class="nav-btn">
                     <div class="i-s i-pomodoro"></div>
                     <div class="label">Pomodoro</div>
                   </li>
                 </ul>
               </nav>
 
-              <main style="display: none" class="timer-content">
+              <main data-timer-content="alarm" class="timer-content">
                 <section class="alarm-config">
                   <div class="timer current-time">18:52:51</div>
                   <div class="alarm-form">
@@ -234,7 +238,7 @@
                 </section>
               </main>
 
-              <main style="display: none" class="timer-content">
+              <main data-timer-content="stopwatch" class="timer-content">
                 <section class="timer-config">
                   <div class="stopwatch-time">
                     18:52:51
@@ -308,7 +312,7 @@
                 </section>
               </main>
 
-              <main style="display: none" class="timer-content">
+              <main data-timer-content="timer" class="timer-content">
                 <section class="timer-config">
                   <div class="current-time">18:52:51</div>
                   <div class="timer-form">
@@ -473,7 +477,10 @@
                 </section>
               </main>
 
-              <main class="timer-content pomodoro-content">
+              <main
+                data-timer-content="pomodoro"
+                class="timer-content pomodoro-content"
+              >
                 <section class="pomodoro-progress">
                   <div class="pomodoro">
                     <div class="p-status on-process">&#9208;Pomodoro</div>
