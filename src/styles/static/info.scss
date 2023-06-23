@@ -15,7 +15,7 @@
 
     &::after {
       content: '/';
-      color: $t-color-2;
+      color: var(--t-color-2);
       margin: 5px 0;
       font-weight: 900;
     }

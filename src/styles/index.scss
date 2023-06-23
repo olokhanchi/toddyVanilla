@@ -2,6 +2,7 @@
 @import 'normalize.css';
 
 @import './general';
+@import './theme';
 @import './static/icons.scss';
 @import './static/nav';
 @import './static/info';
@@ -23,7 +24,7 @@ html {
 
 body {
   font-family: sans-serif;
-  background: $main-bg-color;
+  background: var(--main-bg-color);
   overflow: hidden;
 }
 

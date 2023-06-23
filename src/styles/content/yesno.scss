@@ -15,7 +15,7 @@
 
 .yesno-header {
   font-size: 28px;
-  color: $t-color-1;
+  color: var(--t-color-1);
   font-weight: bold;
   text-align: center;
 }
@@ -33,7 +33,7 @@
 
 .img {
   border-radius: 20px;
-  box-shadow: $shadow-o-main;
+  box-shadow: var(--shadow-o-main);
   width: 100%;
   height: auto;
 }

@@ -1,4 +1,5 @@
 import Tabs from './UI/tabs';
+import ThemeSwitcher from './UI/theme';
 
 window.addEventListener('DOMContentLoaded', () => {
   const timerTabs = new Tabs(
@@ -6,4 +7,7 @@ window.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.timer-wrapper .timer-content')
   );
   timerTabs.init();
+
+  const theme = new ThemeSwitcher(document.documentElement, '.theme', 'dark');
+  theme.init();
 });
