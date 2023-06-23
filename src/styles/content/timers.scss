@@ -25,12 +25,12 @@
     transition: box-shadow 0.5s;
 
     &:hover {
-      box-shadow: $shadow-o-secondary;
+      box-shadow: var(--shadow-o-secondary);
       transition: box-shadow 0.5s;
     }
   }
   .active {
-    box-shadow: $shadow-o-main;
+    box-shadow: var(--shadow-o-main);
     .label {
       color: black;
     }
@@ -39,13 +39,13 @@
   .label {
     margin-left: 10px;
     font-weight: 600;
-    color: $t-color-1;
+    color: var(--t-color-1);
   }
 
   .timer-content {
     display: flex;
     flex: 1 1 100%;
-    box-shadow: $shadow-i-main;
+    box-shadow: var(--shadow-i-main);
     border-radius: 20px;
     align-items: center;
     justify-content: space-around;
@@ -74,8 +74,8 @@
   font-size: 60px;
   line-height: 45px;
   text-align: center;
-  color: $t-color-2;
-  text-shadow: $text-shadow;
+  color: var(--t-color-2);
+  text-shadow: var(--text-shadow);
 }
 
 .alarm-form,
@@ -91,12 +91,12 @@
 .select-field,
 .set-btn {
   padding: 20px;
-  box-shadow: $shadow-o-main;
+  box-shadow: var(--shadow-o-main);
   border-radius: 20px;
   width: 30%;
   flex-grow: 1;
   &:hover {
-    box-shadow: $shadow-o-secondary;
+    box-shadow: var(--shadow-o-secondary);
   }
 }
 
@@ -105,7 +105,7 @@
 }
 .set-btn {
   font-weight: 700;
-  color: $t-color-2;
+  color: var(--t-color-2);
   font-size: 18px;
 
   &:active {
@@ -117,7 +117,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-  color: $t-color-5;
+  color: var(--t-color-5);
 }
 .examples {
   display: flex;
@@ -151,7 +151,7 @@
   margin: 30px 0 20px 0;
   font-size: 36px;
   font-weight: bold;
-  color: $t-color-5;
+  color: var(--t-color-5);
 }
 .alarm-items,
 .stopwatch-items {
@@ -160,7 +160,7 @@
 }
 .alarm-list_header,
 .stopwatch-list_header {
-  color: $t-color-2;
+  color: var(--t-color-2);
   font-size: 18px;
   margin-bottom: 10px;
 }
@@ -177,7 +177,7 @@
 .alarm-item,
 .stopwatch-item {
   position: relative;
-  color: $t-color-1;
+  color: var(--t-color-1);
   font-weight: bold;
   margin: 7px 0;
   font-size: 21px;
@@ -220,7 +220,7 @@
 
 .bg-circle {
   overflow: visible;
-  stroke: $main-bg-color;
+  stroke: var(--main-bg-color);
   fill: transparent;
   stroke-width: 15;
   stroke-dashoffset: -10;
@@ -228,7 +228,7 @@
 
 .main-circle {
   fill: none;
-  stroke: $main-color;
+  stroke: var(--main-color);
   stroke-width: 15;
   stroke-dashoffset: -10;
   stroke-dasharray: 100 150 230 20 230 20 230 20;
@@ -249,10 +249,10 @@
   gap: 20px;
 
   .pause {
-    color: $t-color-4;
+    color: var(--t-color-4);
   }
   .reset {
-    color: $t-color-3;
+    color: var(--t-color-3);
   }
 }
 
@@ -304,7 +304,7 @@
     position: absolute;
     font-size: 36px;
     font-weight: bold;
-    color: $t-color-5;
+    color: var(--t-color-5);
   }
 
   .pomodoro,
@@ -321,12 +321,12 @@
   text-align: center;
   font-size: 24px;
   font-weight: bold;
-  color: $t-color-5;
+  color: var(--t-color-5);
   &.on-process {
-    color: $t-color-1;
+    color: var(--t-color-1);
   }
   &:hover {
-    color: $t-color-1;
+    color: var(--t-color-1);
   }
   &:active {
     transform: scale(0.98);

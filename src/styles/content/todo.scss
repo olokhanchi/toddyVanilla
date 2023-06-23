@@ -44,7 +44,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
-  color: $t-color-6;
+  color: var(--t-color-6);
   padding: 0 10px;
   width: 100%;
 }
@@ -63,7 +63,7 @@
   height: 20px;
   user-select: none;
   transition: color 0.5s;
-  color: $t-color-6;
+  color: var(--t-color-6);
 
   &:hover {
     color: #009f0b;
@@ -81,7 +81,7 @@
   height: 100%;
   width: 100%;
   flex: 1 1 100%;
-  box-shadow: $shadow-i-main;
+  box-shadow: var(--shadow-i-main);
   border-radius: $br-xl;
   padding: 20px 15px;
   gap: 15px;
@@ -93,18 +93,19 @@
   display: flex;
   width: 100%;
   border-radius: $br-x;
-  box-shadow: $shadow-o-secondary;
+  box-shadow: var(--shadow-o-secondary);
   justify-content: start;
   transition: box-shadow 0.5s;
   align-items: center;
   & [contenteditable='true'] {
-    color: #686868;
+    color: var(--t-color-6);
+    opacity: 0.5;
     &:empty:before {
       content: attr(data-ph);
     }
   }
   &:hover {
-    box-shadow: $shadow-o-main;
+    box-shadow: var(--shadow-o-main);
     transition: box-shadow 0.5s;
     .task-item_delete-btn {
       visibility: visible;
@@ -113,7 +114,7 @@
     }
   }
   &:has([contenteditable='true']) {
-    box-shadow: $shadow-o-main;
+    box-shadow: var(--shadow-o-main);
   }
 }
 
@@ -155,7 +156,7 @@
   width: 80px;
   padding: 10px;
   &:hover {
-    color: $t-color-4;
+    color: var(--t-color-4);
   }
 }
 
