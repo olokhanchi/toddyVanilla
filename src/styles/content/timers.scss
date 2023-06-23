@@ -31,7 +31,6 @@
   }
   .active {
     box-shadow: $shadow-o-main;
-    pointer-events: none;
     .label {
       color: black;
     }
@@ -45,7 +44,7 @@
 
   .timer-content {
     display: flex;
-    flex: 1 1 auto;
+    flex: 1 1 100%;
     box-shadow: $shadow-i-main;
     border-radius: 20px;
     align-items: center;
@@ -54,6 +53,11 @@
     padding: 20px;
     gap: 20px;
     flex-wrap: wrap;
+
+    opacity: 1;
+    order: 0;
+    transition: opacity 0.5s;
+    transition: order 0.3s;
   }
 }
 
@@ -344,4 +348,8 @@
     width: auto;
     margin-bottom: 0;
   }
+}
+
+.hide {
+  display: none !important;
 }
