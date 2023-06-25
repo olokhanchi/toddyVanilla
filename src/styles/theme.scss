@@ -20,7 +20,8 @@
   --t-color-3: #d6af27;
   --t-color-4: #bb5050;
   --t-color-5: #8a8a8a;
-  --t-color-6: #6f7073;
+  --t-color-6: #2e2e2e;
+  --t-color-active: #000000;
 
   /* Shadow */
   --shadow-i-main: inset 5px 5px 9px rgba(0, 0, 0, 0.1),
@@ -29,34 +30,44 @@
     -5px -5px 9px rgba(255, 255, 255, 0.45);
   --shadow-o-secondary: 5px 5px 5px rgba(0, 0, 0, 0.05),
     -5px -5px 5px rgba(255, 255, 255, 0.2);
-  --shadow-o-hover: 5px 5px 7px rgba(0, 0, 0, 0.05),
-    -5px -5px 7px rgba(255, 255, 255, 0.2);
+  --shadow-o-hover: 5px 5px 9px rgba(0, 0, 0, 0.1),
+    -5px -5px 9px rgba(255, 255, 255, 0.624);
   --text-shadow: 5px 5px 9px rgba(0, 0, 0, 0.1),
     -5px -5px 9px rgba(255, 255, 255, 0.45);
 }
 
 .dark {
-  --main-bg-color: #1c1f25;
-  --secondary-bg-color: #0e0e0e;
-  --main-color: #4d9ea8;
-  --nav-btn-active: #303030;
-  --btn-color: #1c1f25;
-  --btn-color-2: #4d9ea8;
-  --t-color-0: #000000;
-  --t-color-1: #d2d2d2;
-  --t-color-2: #2ab9cd;
-  --t-color-3: #c0981f;
-  --t-color-4: #a04343;
-  --t-color-5: #777777;
-  --t-color-6: #d5d5d5;
-  --shadow-i-main: inset 5px 5px 9px rgba(0, 0, 0, 0.1),
-    inset -5px -5px 9px rgba(0, 0, 0, 0.1);
-  --shadow-o-main: 5px 5px 9px rgba(0, 0, 0, 0.1),
-    -5px -5px 9px rgba(11, 11, 11, 0.122);
-  --shadow-o-secondary: 5px 5px 5px rgba(0, 0, 0, 0.05),
-    -5px -5px 5px rgba(0, 0, 0, 0.2);
-  --shadow-o-hover: 5px 5px 7px rgba(0, 0, 0, 0.05),
-    -5px -5px 7px rgba(23, 23, 23, 0.1);
-  --text-shadow: 5px 5px 9px rgba(0, 0, 0, 0.1),
-    -5px -5px 9px rgba(0, 0, 0, 0.2);
+  --main-bg-color: #1a1a1a;
+  --secondary-bg-color: #121212;
+  --main-color: #ff4444;
+  --nav-btn-active: #383838;
+  --btn-color: #1a1a1a;
+  --btn-color-2: #ff4444;
+  --br-s: 5px;
+  --br-m: 10px;
+  --br-x: 15px;
+  --br-xl: 20px;
+
+  /* Text color */
+  --t-color-0: #ffffff;
+  --t-color-1: #bfbfbf;
+  --t-color-2: #ff4444;
+  --t-color-3: #ffc107;
+  --t-color-4: #ff1744;
+  --t-color-5: #dcdcdc;
+  --t-color-6: #dedede;
+  --t-color-active: #ffffff;
+  /* Shadow */
+  --shadow-null: inset 0 0 0 rgba(0, 0, 0, 0), inset -0 -0 0 rgba(50, 50, 50, 0);
+
+  --shadow-i-main: inset 4px 4px 8px rgba(0, 0, 0, 0.2),
+    inset -4px -4px 8px rgba(50, 50, 50, 0.15);
+  --shadow-o-main: 4px 4px 8px rgba(0, 0, 0, 0.4),
+    -4px -4px 8px rgba(255, 255, 255, 0.15);
+  --shadow-o-secondary: 4px 4px 8px rgba(0, 0, 0, 0.2),
+    -4px -4px 8px rgba(50, 50, 50, 0.15);
+  --shadow-o-hover: 4px 4px 8px rgba(0, 0, 0, 0.3),
+    -4px -4px 8px rgba(50, 50, 50, 0.3);
+  --text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4),
+    -4px -4px 8px rgba(80, 80, 80, 0.15);
 }

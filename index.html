@@ -2,7 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="shortcut icon" href="./public/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>toddy</title>
   </head>
@@ -11,36 +15,21 @@
       <div class="container">
         <nav class="nav">
           <div class="logo"></div>
-          <div class="menu-items" data-type="nav-menu">
-            <a href="#todo" class="menu-item" title="Todo App!" data-btn="todo">
+          <ul class="menu-items" data-nav-btns="main">
+            <li data-main-btn="todo" class="menu-item" title="Todo App!">
               <div class="i-s i-todo"></div>
-            </a>
-            <a
-              href="#timer"
-              class="menu-item"
-              title="Timer App!"
-              data-btn="timer"
-            >
+            </li>
+            <li data-main-btn="timers" class="menu-item" title="Timer App!">
               <div class="i-s i-timers"></div>
-            </a>
-            <a
-              href="#weather"
-              class="menu-item"
-              title="Weather App!"
-              data-btn="weather"
-            >
+            </li>
+            <li data-main-btn="weather" class="menu-item" title="Weather App!">
               <div class="i-s i-weather"></div>
-            </a>
+            </li>
 
-            <a
-              href="#yesno"
-              class="menu-item"
-              title="YesNo App!"
-              data-btn="yesno"
-            >
+            <li data-main-btn="yesno" class="menu-item" title="YesNo App!">
               <div class="i-s i-idea"></div>
-            </a>
-          </div>
+            </li>
+          </ul>
           <div class="theme">
             <label for="theme"
               ><input type="checkbox" name="changeTheme" id="theme" />
@@ -132,66 +121,14 @@
         </nav>
 
         <div id="pages">
-          <main class="content todo" id="todo">
-            <div class="task-wrapper">
-              <div class="task-block" data-type="todo">
-                <div class="task-block_header">
-                  <div class="task-block_name">&#128529; todo</div>
-                  <button class="task-block_add-btn">+add</button>
-                </div>
-                <div class="task-block_content">
-                  <div class="task-item">
-                    <div class="task-item_text"></div>
-                    <button class="task-item_delete-btn"></button>
-                  </div>
-                </div>
-                <div class="task-block_footer">
-                  <button class="task-block_delete-btn">clear all</button>
-                </div>
-              </div>
-              <div class="task-block" data-type="todo">
-                <div class="task-block_header">
-                  <div class="task-block_name">&#128529; todo</div>
-                  <button class="task-block_add-btn">+add</button>
-                </div>
-                <div class="task-block_content">
-                  <div class="task-item">
-                    <div
-                      class="task-item_text"
-                      contenteditable="true"
-                      data-ph="Start typing your task..."
-                    ></div>
-                    <button class="task-item_delete-btn i-m i-trash"></button>
-                  </div>
-                  <div class="task-item">
-                    <div class="task-item_text" title="Double click for edit">
-                      Сделать задачу ав ола лльувм щл ввв уукму умукм укмук
-                      уцмва муму мукм укму мук щлщумщ щдцывм
-                    </div>
-                    <button class="task-item_delete-btn i-m i-trash"></button>
-                  </div>
-                </div>
-                <div class="task-block_footer">
-                  <button class="task-block_delete-btn">clear all</button>
-                </div>
-              </div>
-              <div class="task-block" data-type="todo">
-                <div class="task-block_header">
-                  <div class="task-block_name">&#128529; todo</div>
-                  <button class="task-block_add-btn">+add</button>
-                </div>
-                <div class="task-block_content"></div>
-                <div class="task-block_footer">
-                  <button class="task-block_delete-btn">clear all</button>
-                </div>
-              </div>
-            </div>
+          <main data-main-content="todo" class="content todo" id="todo">
+            <div class="task-wrapper"></div>
           </main>
 
-          <main class="content timer" id="timer">
+          <main data-main-content="timers" class="content timer" id="timer">
             <div class="timer-wrapper">
               <nav class="timer-nav">
-                <ul class="timer-nav_btns">
+                <ul data-nav-btns="timers" class="timer-nav_btns">
                   <li data-timer-btn="alarm" class="nav-btn active">
                     <div class="i-s i-alarm"></div>
                     <div class="label">Alarm clock</div>
@@ -889,7 +826,11 @@
             </div>
           </main>
 
-          <main class="content weather" id="weather">
+          <main
+            data-main-content="weather"
+            class="content weather"
+            id="weather"
+          >
             <div class="weather-wrapper">
               <section class="upper-block">
                 <div class="upper-block_header">
@@ -973,6 +914,90 @@
         </aside>
       </div>
     </div>
+    <!-- <div class="popup">
+      <div class="popup-content">
+        <div class="emoji">&#x1F600;</div>
+        <div class="emoji">&#x1F601;</div>
+        <div class="emoji">&#x1F602;</div>
+        <div class="emoji">&#x1F603;</div>
+        <div class="emoji">&#x1F604;</div>
+        <div class="emoji">&#x1F605;</div>
+        <div class="emoji">&#x1F606;</div>
+        <div class="emoji">&#x1F607;</div>
+        <div class="emoji">&#x1F608;</div>
+        <div class="emoji">&#x1F609;</div>
+        <div class="emoji">&#x1F60A;</div>
+        <div class="emoji">&#x1F60B;</div>
+        <div class="emoji">&#x1F60C;</div>
+        <div class="emoji">&#x1F60D;</div>
+        <div class="emoji">&#x1F60E;</div>
+        <div class="emoji">&#x1F60F;</div>
+        <div class="emoji">&#x1F610;</div>
+        <div class="emoji">&#x1F611;</div>
+        <div class="emoji">&#x1F612;</div>
+        <div class="emoji">&#x1F613;</div>
+        <div class="emoji">&#x1F614;</div>
+        <div class="emoji">&#x1F615;</div>
+        <div class="emoji">&#x1F616;</div>
+        <div class="emoji">&#x1F617;</div>
+        <div class="emoji">&#x1F618;</div>
+        <div class="emoji">&#x1F619;</div>
+        <div class="emoji">&#x1F61A;</div>
+        <div class="emoji">&#x1F61B;</div>
+        <div class="emoji">&#x1F61C;</div>
+        <div class="emoji">&#x1F61D;</div>
+        <div class="emoji">&#x1F61E;</div>
+        <div class="emoji">&#x1F61F;</div>
+        <div class="emoji">&#x1F620;</div>
+        <div class="emoji">&#x1F621;</div>
+        <div class="emoji">&#x1F622;</div>
+        <div class="emoji">&#x1F623;</div>
+        <div class="emoji">&#x1F624;</div>
+        <div class="emoji">&#x1F625;</div>
+        <div class="emoji">&#x1F626;</div>
+        <div class="emoji">&#x1F627;</div>
+        <div class="emoji">&#x1F628;</div>
+        <div class="emoji">&#x1F629;</div>
+        <div class="emoji">&#x1F62A;</div>
+        <div class="emoji">&#x1F62B;</div>
+        <div class="emoji">&#x1F62C;</div>
+        <div class="emoji">&#x1F62D;</div>
+        <div class="emoji">&#x1F62E;</div>
+        <div class="emoji">&#x1F62F;</div>
+        <div class="emoji">&#x1F630;</div>
+        <div class="emoji">&#x1F631;</div>
+        <div class="emoji">&#x1F632;</div>
+        <div class="emoji">&#x1F633;</div>
+        <div class="emoji">&#x1F634;</div>
+        <div class="emoji">&#x1F635;</div>
+        <div class="emoji">&#x1F636;</div>
+        <div class="emoji">&#x1F637;</div>
+        <div class="emoji">&#x1F638;</div>
+        <div class="emoji">&#x1F639;</div>
+        <div class="emoji">&#x1F63A;</div>
+        <div class="emoji">&#x1F63B;</div>
+        <div class="emoji">&#x1F63C;</div>
+        <div class="emoji">&#x1F63D;</div>
+        <div class="emoji">&#x1F63E;</div>
+        <div class="emoji">&#x1F63F;</div>
+        <div class="emoji">&#x1F640;</div>
+        <div class="emoji">&#x1F641;</div>
+        <div class="emoji">&#x1F642;</div>
+        <div class="emoji">&#x1F643;</div>
+        <div class="emoji">&#x1F644;</div>
+        <div class="emoji">&#x1F645;</div>
+        <div class="emoji">&#x1F646;</div>
+        <div class="emoji">&#x1F647;</div>
+        <div class="emoji">&#x1F648;</div>
+        <div class="emoji">&#x1F649;</div>
+        <div class="emoji">&#x1F64A;</div>
+        <div class="emoji">&#x1F64B;</div>
+        <div class="emoji">&#x1F64C;</div>
+        <div class="emoji">&#x1F64D;</div>
+        <div class="emoji">&#x1F64E;</div>
+        <div class="emoji">&#x1F64F;</div>
+      </div>
+    </div> -->
     <script type="module" src="/main.js"></script>
   </body>
 </html>

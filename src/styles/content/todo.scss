@@ -47,10 +47,19 @@
   color: var(--t-color-6);
   padding: 0 10px;
   width: 100%;
+  user-select: none;
 }
 .task-block_name {
-  font-size: 21px;
+  flex: 1;
+  font-size: 20px;
   font-weight: bold;
+  cursor: text;
+}
+
+.task-block_emoji {
+  font-size: 21px;
+  margin-right: 3px;
+  cursor: pointer;
 }
 .task-block_add-btn,
 .task-block_delete-btn {
@@ -99,13 +108,13 @@
   align-items: center;
   & [contenteditable='true'] {
     color: var(--t-color-6);
-    opacity: 0.5;
+    opacity: 0.8;
     &:empty:before {
       content: attr(data-ph);
     }
   }
   &:hover {
-    box-shadow: var(--shadow-o-main);
+    box-shadow: var(--shadow-o-hover);
     transition: box-shadow 0.5s;
     .task-item_delete-btn {
       visibility: visible;
@@ -114,15 +123,16 @@
     }
   }
   &:has([contenteditable='true']) {
-    box-shadow: var(--shadow-o-main);
+    box-shadow: var(--shadow-o-hover);
+    outline: 2px solid var(--t-color-2);
   }
 }
 
 .task-item_text {
   font-size: 18px;
   font-weight: 400;
-  color: #494949;
-  word-break: break-all;
+  color: var(--t-color-6);
+  word-break: break-word;
   flex: 1 1 auto;
   line-height: 25px;
   outline: none;

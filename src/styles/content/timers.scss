@@ -25,18 +25,23 @@
     transition: box-shadow 0.5s;
 
     &:hover {
-      box-shadow: var(--shadow-o-secondary);
+      box-shadow: var(--shadow-o-hover);
       transition: box-shadow 0.5s;
     }
   }
   .active {
-    box-shadow: var(--shadow-o-main);
+    box-shadow: var(--shadow-o-secondary);
+    &:hover {
+      box-shadow: var(--shadow-o-secondary);
+    }
     .label {
-      color: black;
+      color: var(--t-color-active);
+      pointer-events: none;
     }
   }
 
   .label {
+    padding-top: 1.6px;
     margin-left: 10px;
     font-weight: 600;
     color: var(--t-color-1);
@@ -91,12 +96,22 @@
 .select-field,
 .set-btn {
   padding: 20px;
-  box-shadow: var(--shadow-o-main);
+  box-shadow: var(--shadow-o-secondary);
   border-radius: 20px;
   width: 30%;
   flex-grow: 1;
+  input,
+  select {
+    color: var(--t-color-active);
+    font-weight: bold;
+  }
+
+  option {
+    background-color: var(--t-color-2);
+    font-weight: bold;
+  }
   &:hover {
-    box-shadow: var(--shadow-o-secondary);
+    box-shadow: var(--shadow-o-hover);
   }
 }
 
@@ -348,8 +363,4 @@
     width: auto;
     margin-bottom: 0;
   }
-}
-
-.hide {
-  display: none !important;
 }
