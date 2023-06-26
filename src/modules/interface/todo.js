@@ -6,6 +6,9 @@ export default class Todo extends Data {
     super();
     this.todoWrapper = document.querySelector(wrapper);
     this.boards = Array.from(this.todoWrapper.children);
+    this.currentContent = null;
+    this.addTaskItem = null;
+    this.currentAddBtn = null;
   }
 
   createTodoData() {
@@ -36,13 +39,37 @@ export default class Todo extends Data {
 
     taskBoardHeader.forEach((header) => {
       header.addEventListener('click', (e) => {
-        if (U.isTarget(e, '.task-block_emoji'))
-          console.log(U.isTarget(e, '.task-block_emoji'));
-      });
-      header.addEventListener('contextmenu', (e) => {
-        console.log(e);
+        if (U.isTarget(e, '.task-block_add-btn')) {
+          const targetBlock = e.target.closest('.task-block');
+          const targetContent = targetBlock.querySelector(
+            '.task-block_content'
+          );
+          this.currentAddBtn = targetBlock.querySelector('button');
+          this.currentContent = targetContent;
+          this.createTaskElement(this.currentContent);
+        }
       });
     });
+  }
+
+  createTaskElement(blockContent) {
+    const taskAddItemHTML = U.taskTemplate('', '', 'new task', true).trim();
+    blockContent.insertAdjacentHTML('afterbegin', taskAddItemHTML);
+
+    const taskAddItemElement = blockContent.querySelector(
+      '[contenteditable="true"]'
+    );
+    taskAddItemElement.parentNode.classList.add('scaleX');
+    taskAddItemElement.addEventListener('blur', () => {
+      if (!taskAddItemElement.textContent.trim()) {
+        taskAddItemElement.parentNode.remove();
+        return;
+      }
+
+      taskAddItemElement.setAttribute('contenteditable', false);
+    });
+
+    taskAddItemElement.focus();
   }
 
   init() {
