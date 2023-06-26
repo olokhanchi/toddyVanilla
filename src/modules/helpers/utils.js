@@ -45,10 +45,15 @@ export default class U {
    </div>`;
   }
 
-  static taskTemplate(id, description, editable = false) {
+  static taskTemplate(
+    id,
+    description,
+    title = 'Right click to edit or delete',
+    editable = false
+  ) {
     return `
     <div class="task-item">
-    <div data-task-id=${id} class="task-item_text" contenteditable=${editable} spellcheck="true" title="Double click for edit">
+    <div data-task-id="${id}" class="task-item_text" contenteditable=${editable} spellcheck="true" title="${title}">
       ${description}
     </div>
   </div>

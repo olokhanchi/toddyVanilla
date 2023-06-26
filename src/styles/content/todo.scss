@@ -97,6 +97,7 @@
   overflow-x: auto;
 }
 .task-item {
+  user-select: none;
   cursor: move;
   padding: 12px 10px;
   display: flex;
@@ -106,7 +107,22 @@
   justify-content: start;
   transition: box-shadow 0.5s;
   align-items: center;
+  font-size: 18px;
+  word-break: break-word;
+  .task-item_text {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--t-color-6);
+    flex: 1 1 auto;
+    line-height: 25px;
+    outline: none;
+    user-select: none;
+  }
   & [contenteditable='true'] {
+    cursor: text !important;
+    user-select: text;
+
+    outline: none;
     color: var(--t-color-6);
     opacity: 0.8;
     &:empty:before {
@@ -126,17 +142,6 @@
     box-shadow: var(--shadow-o-hover);
     outline: 2px solid var(--t-color-2);
   }
-}
-
-.task-item_text {
-  font-size: 18px;
-  font-weight: 400;
-  color: var(--t-color-6);
-  word-break: break-word;
-  flex: 1 1 auto;
-  line-height: 25px;
-  outline: none;
-  user-select: none;
 }
 
 .task-item_delete-btn {

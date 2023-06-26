@@ -69,6 +69,18 @@ h3 {
   }
 }
 
+.scaleX {
+  animation: scaleX 0.1s ease;
+}
+@keyframes scaleX {
+  0% {
+    height: 0px;
+  }
+  to {
+    height: 49px;
+  }
+}
+
 .popup {
   position: absolute;
   display: flex;
