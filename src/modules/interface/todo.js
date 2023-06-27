@@ -5,10 +5,9 @@ export default class Todo extends Data {
   constructor(wrapper) {
     super();
     this.todoWrapper = document.querySelector(wrapper);
-    this.boards = Array.from(this.todoWrapper.children);
-    this.currentContent = null;
-    this.addTaskItem = null;
-    this.currentAddBtn = null;
+    this.currentAddBtn;
+    this.currentAddBtnMode = 'add';
+    this.currentTaskItemInput;
   }
 
   createTodoData() {
@@ -21,9 +20,7 @@ export default class Todo extends Data {
       const boardEmoji = boardData[1].emoji;
       const boardTasks = boardData[1].tasks;
 
-      const taskItems = boardTasks
-        .map((task) => U.taskTemplate(task.id, task.description).trim())
-        .join('');
+      const taskItems = boardTasks.map((task) => U.taskTemplate(task.id, task.description).trim()).join('');
 
       return U.boardTemplate(boardName, boardEmoji, taskItems).trim();
     });
@@ -39,37 +36,58 @@ export default class Todo extends Data {
 
     taskBoardHeader.forEach((header) => {
       header.addEventListener('click', (e) => {
-        if (U.isTarget(e, '.task-block_add-btn')) {
-          const targetBlock = e.target.closest('.task-block');
-          const targetContent = targetBlock.querySelector(
-            '.task-block_content'
-          );
-          this.currentAddBtn = targetBlock.querySelector('button');
-          this.currentContent = targetContent;
-          this.createTaskElement(this.currentContent);
+        const addBtnTarget = U.findTargetUp(e, '.task-block_add-btn');
+        this.currentAddBtn = addBtnTarget;
+
+        if (addBtnTarget && this.currentAddBtnMode === 'save') {
+        }
+
+        if (addBtnTarget && this.currentAddBtnMode === 'add') {
+          const currentBlock = U.findTargetUp(e, '.task-block');
+          const currentContent = currentBlock.querySelector('.task-block_content');
+          this.currentContent = currentContent;
+          this.currentAddBtnMode = 'save';
+          this.currentAddBtn.textContent = '✓save';
+          this.createTaskElement();
         }
       });
     });
   }
 
-  createTaskElement(blockContent) {
+  createTaskElement() {
     const taskAddItemHTML = U.taskTemplate('', '', 'new task', true).trim();
-    blockContent.insertAdjacentHTML('afterbegin', taskAddItemHTML);
+    this.currentContent.insertAdjacentHTML('afterbegin', taskAddItemHTML);
 
-    const taskAddItemElement = blockContent.querySelector(
-      '[contenteditable="true"]'
-    );
-    taskAddItemElement.parentNode.classList.add('scaleX');
-    taskAddItemElement.addEventListener('blur', () => {
-      if (!taskAddItemElement.textContent.trim()) {
-        taskAddItemElement.parentNode.remove();
+    const taskAddItemElement = this.currentContent.querySelector('[contenteditable="true"]');
+    taskAddItemElement.focus();
+
+    function blurHandler() {
+      if (this.currentAddBtnMode === 'save') {
         return;
       }
-
+      if (!taskAddItemElement.innerText.trim()) {
+        this.currentAddBtnMode = 'add';
+        this.currentAddBtn.textContent = '+add';
+        taskAddItemElement.parentNode.remove();
+        U.removeEvent('blur', taskAddItemElement, blurHandler.bind(this));
+      }
       taskAddItemElement.setAttribute('contenteditable', false);
-    });
+    }
+    U.addEvent('blur', taskAddItemElement, blurHandler.bind(this));
 
-    taskAddItemElement.focus();
+    // if (!taskAddItemElement.innerText.trim()) {
+    //   taskAddItemElement.parentNode.remove();
+    // }
+
+    // taskAddItemElement.parentNode.classList.add('scaleX');
+    // taskAddItemElement.addEventListener('blur', () => {
+    //   this.currentAddBtnMode = 'add';
+    //   this.currentAddBtn.textContent = '+add';
+    //   if (!taskAddItemElement.textContent.trim() && this.currentAddBtnMode !== 'add') {
+    //     taskAddItemElement.parentNode.remove();
+    //     return;
+    //   }
+    // });
   }
 
   init() {

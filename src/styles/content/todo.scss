@@ -121,13 +121,9 @@
   & [contenteditable='true'] {
     cursor: text !important;
     user-select: text;
-
     outline: none;
     color: var(--t-color-6);
     opacity: 0.8;
-    &:empty:before {
-      content: attr(data-ph);
-    }
   }
   &:hover {
     box-shadow: var(--shadow-o-hover);
