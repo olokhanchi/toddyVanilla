@@ -5,7 +5,12 @@ import Todo from './interface/todo';
 window.addEventListener('DOMContentLoaded', () => {
   //UI
   try {
-    new ThemeSwitcher(document.documentElement, '.theme', 'dark').init();
+    new ThemeSwitcher(
+      document.documentElement,
+      '.theme',
+      'dark',
+      'dark'
+    ).init();
     new Navigation(
       '[data-nav-btns="main"]',
       '[data-main-content]',

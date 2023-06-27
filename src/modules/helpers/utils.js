@@ -10,10 +10,7 @@ export default class U {
     todoData.set('todo', {
       name: 'todo',
       emoji: '&#x1F600',
-      tasks: [
-        { id: '1', description: 'my first task' },
-        { id: '2', description: 'my second task' },
-      ],
+      tasks: [{ id: '1', description: 'my first task' }],
     });
     todoData.set('doing', {
       name: 'doing',
@@ -45,14 +42,9 @@ export default class U {
    </div>`;
   }
 
-  static taskTemplate(
-    id,
-    description,
-    title = 'Right click to edit or delete',
-    editable = false
-  ) {
+  static taskTemplate(id, description, title = 'Right click to edit or delete', editable = false) {
     return `
-    <div class="task-item">
+    <div class="task-item scaleX">
     <div data-task-id="${id}" class="task-item_text" contenteditable=${editable} spellcheck="true" title="${title}">
       ${description}
     </div>
@@ -60,7 +52,39 @@ export default class U {
     `;
   }
 
-  static isTarget(e, closestValue) {
+  static findTargetUp(e, closestValue) {
     return e.target.closest(closestValue);
   }
+
+  static multiplePress(eventElement, firstKey, secondKey, callback) {
+    let firstKeyPressed = false;
+
+    eventElement.addEvesntListener('keydown', (event) => {
+      if (event.key === firstKey.toString()) {
+        firstKeyPressed = true;
+      }
+
+      if (event.key === 'Enter') {
+        event.preventDefault();
+      }
+
+      if (event.key === secondKey.toString() && firstKeyPressed) {
+        callback();
+      }
+    });
+
+    eventElement.addEventListener('keyup', (event) => {
+      if (event.key === firstKey.toString()) {
+        firstKeyPressed = false;
+      }
+    });
+  }
+
+  static addEvent(type, element, handler) {
+    element.addEventListener(type, handler);
+  }
+  static removeEvent(type, element, handler) {
+    element.removeEventListener(type, handler);
+  }
+
 }
