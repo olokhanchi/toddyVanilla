@@ -65,7 +65,6 @@
 .task-block_delete-btn {
   text-transform: lowercase;
   background: none;
-  font-weight: 500;
   outline: none;
   border: none;
   cursor: pointer;
@@ -73,10 +72,10 @@
   user-select: none;
   transition: color 0.5s;
   color: var(--t-color-6);
-
+  transition: color 0.3s;
   &:hover {
     color: #009f0b;
-    transition: color 0.5s;
+    transition: color 0.3s;
   }
   &.active {
     user-select: none;

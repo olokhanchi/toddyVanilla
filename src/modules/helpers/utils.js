@@ -44,8 +44,8 @@ export default class U {
 
   static taskTemplate(id, description, title = 'Right click to edit or delete', editable = false) {
     return `
-    <div class="task-item scaleX">
-    <div data-task-id="${id}" class="task-item_text" contenteditable=${editable} spellcheck="true" title="${title}">
+    <div class="task-item scaleX" title="${title}">
+    <div data-task-id="${id}" class="task-item_text" contenteditable=${editable} spellcheck="true">
       ${description}
     </div>
   </div>
@@ -85,6 +85,6 @@ export default class U {
   }
   static removeEvent(type, element, handler) {
     element.removeEventListener(type, handler);
+    console.log('Event Removed');
   }
-
 }
