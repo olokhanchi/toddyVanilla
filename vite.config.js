@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import babel from 'vite-plugin-babel';
 
 export default defineConfig({
   build: {
@@ -7,9 +8,16 @@ export default defineConfig({
     sourcemap: false, // Генерация sourcemaps для отладки
     minify: true, // Минимизация и оптимизация кода
     terserOptions: {
-      // Пользовательские опции для Terser
+      compress: {
+        drop_console: true, // Удалить все console.log
+      },
+      format: {
+        comments: false, // Удалить все комментарии
+      },
+      keep_classnames: false,
+      keep_fnames: false,
     },
-    target: 'es2018', // Целевая версия ECMAScript
+    target: 'es2015', // Целевая версия ECMAScript
     cssCodeSplit: true, // Разделение CSS на отдельные файлы
     assetsInlineLimit: 4096, // Пороговое значение размера файлов, которые будут инлайниться в HTML
     chunkSizeWarningLimit: 500, // Пороговое значение размера чанков, при котором будет выдано предупреждение
@@ -30,9 +38,7 @@ export default defineConfig({
   },
 
   // Плагины Vite
-  plugins: [
-    // Плагины...
-  ],
+  plugins: [babel()],
 
   // Дополнительные опции разработки
   server: {
@@ -40,5 +46,6 @@ export default defineConfig({
     host: 'localhost',
     port: 3000, // Порт для сервера разработки
     open: true, // Автоматическое открытие браузера при запуске сервера
+    watch: false,
   },
 });

@@ -6,6 +6,7 @@ export default class Todo extends Data {
     super();
     this.todoWrapper = document.querySelector(wrapper);
     this.currentAddBtn = null;
+    this.addBtnFor = 'task'; // block name edit
     this.currentAddBtnMode = 'add';
     this.currentContent = null;
     this.taskAddItemField = null;
@@ -44,9 +45,8 @@ export default class Todo extends Data {
           const currentBlock = U.findTargetUp(e, '.task-block');
           const currentContent = currentBlock.querySelector('.task-block_content');
           this.currentContent = currentContent;
-          console.log(this.currentAddBtnMode);
 
-          if (this.currentAddBtnMode === 'add') {
+          if (this.addBtnFor === 'task' && this.currentAddBtnMode === 'add') {
             this.changeBtnModeTo('delete');
             this.createTaskElement();
           } else if (this.currentAddBtnMode === 'save') {
@@ -72,16 +72,19 @@ export default class Todo extends Data {
 
     taskAddItemField.focus();
 
-    const blurHandler = () => {
-      this.changeBtnModeTo('add');
-
-      U.removeEvent('input', taskAddItemField, inputHandler.bind(this));
-
-      if (!taskAddItemField.innerText.trim()) {
+    const blurHandler = (e) => {
+      if (!taskAddItemField.innerText.trim() && this.currentAddBtnMode === 'delete') {
+        e.preventDefault();
         this.changeBtnModeTo('add');
         taskAddItemField.parentNode.remove();
         U.removeEvent('blur', taskAddItemField, blurHandler.bind(this));
+
+        // U.removeEvent('input', taskAddItemField, inputHandler.bind(this));
+      } else if (this.currentAddBtnMode === 'save' || this.currentAddBtnMode === 'delete') {
+        return;
       }
+      this.changeBtnModeTo('add');
+
       taskAddItemField.setAttribute('contenteditable', false);
       taskAddItemField.parentNode.setAttribute('title', 'Right click to edit or delete');
     };
@@ -93,13 +96,13 @@ export default class Todo extends Data {
         this.changeBtnModeTo('delete');
       }
     };
-    const pasteHandler = (event) => {
+    const pasteHandler = (e) => {
       function stripFormatting(text) {
         const strippedText = text.replace(/<[^>]+>/g, '');
         const cleanText = strippedText.trim();
         return cleanText;
       }
-      event.preventDefault();
+      e.preventDefault();
       const clipboardData = event.clipboardData || window.clipboardData;
       const pastedText = clipboardData.getData('text/plain');
       const strippedText = stripFormatting(pastedText);
@@ -107,17 +110,21 @@ export default class Todo extends Data {
       U.removeEvent('paste', taskAddItemField, pasteHandler.bind(this));
     };
 
-    // U.addEvent('blur', taskAddItemElement, blurHandler.bind(this));
+    U.addEvent('blur', taskAddItemField, blurHandler.bind(this));
     U.addEvent('input', taskAddItemField, inputHandler.bind(this));
     U.addEvent('paste', taskAddItemField, pasteHandler.bind(this));
 
-    // taskAddItemElement.addEventListener('blur', blurHandler);
+    taskAddItemField.addEventListener('blur', blurHandler);
   }
 
   changeBtnModeTo(mode) {
-    console.log(this.todoWrapper.querySelectorAll('.task-block_add-btn'));
     this.currentAddBtnMode = mode;
     if (mode === 'add') {
+      const btns = this.todoWrapper.querySelectorAll('.task-block_add-btn');
+      btns.forEach((btn) => {
+        btn.style.removeProperty('color');
+        btn.textContent = '+' + mode;
+      });
       this.currentAddBtn.textContent = '+' + mode;
       this.currentAddBtn.style.removeProperty('color');
     } else if (mode === 'save') {
