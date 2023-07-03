@@ -1,27 +1,15 @@
-export default class Data {
+export default class Storage {
   constructor(dbType = 'localStorage') {
     this.dbType = dbType;
     this.db = this.initializeDatabase();
-    this.length = this.initializeDatabase().length;
   }
 
   initializeDatabase() {
-    switch (this.dbType) {
-      case 'localStorage':
-        return window.localStorage;
-      case 'sessionStorage':
-        return window.sessionStorage;
-      default:
-        throw new Error('Unsupported database type');
+    if (this.dbType === 'localStorage') {
+      return window.localStorage;
+    } else {
+      throw new Error(`${this.dbType} unsupported`);
     }
-  }
-
-  addItem(key, value) {
-    const oldDataFormDb = this.getData('todoData');
-    const targetType = oldDataFormDb.find((d) => {
-      return d.includes(key);
-    });
-    console.log(targetType);
   }
 
   addData(key, value) {
