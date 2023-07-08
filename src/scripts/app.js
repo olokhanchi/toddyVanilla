@@ -6,4 +6,4 @@ import TaskEventController from './controllers/TaskEventController.js';
 const taskModel = new TaskModel();
 const taskView = new TaskView();
 const taskController = new TaskController(taskModel, taskView);
-const eventController = new TaskEventController(taskView, taskController);
+const taskEventController = new TaskEventController(taskView, taskController);

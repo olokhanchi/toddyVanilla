@@ -1,40 +1,42 @@
 import Storage from '../storage/db';
 
 export default class TaskModel {
+  taskTypes = ['todo', 'doing', 'done'];
   constructor() {
     this.storage = new Storage();
-    
+
     this.todo = {
       properties: { name: 'todo', emoji: '😭' },
-      data: [{ id: 'new', description: 'Your task items looks like this' }],
+      data: [],
     };
     this.doing = {
       properties: { name: 'doing', emoji: '🥺' },
-      data: [{ id: 'new', description: 'Right click to edit or remove' }],
+      data: [],
     };
     this.done = {
       properties: { name: 'done', emoji: '😉' },
-      data: [{ id: 'new', description: 'Drag to change task board' }],
+      data: [],
     };
+  }
 
-    const todoDataFromDb = this.storage.getData('todo');
-    const doingDataFromDb = this.storage.getData('doing');
-    const doneDataFromDb = this.storage.getData('done');
-
-    if (!todoDataFromDb && !doingDataFromDb && !doneDataFromDb) {
-      this.storage.addData('todo', this.todo);
-      this.storage.addData('doing', this.doing);
-      this.storage.addData('done', this.done);
-    } else {
-      this.todo = todoDataFromDb;
-      this.doing = doingDataFromDb;
-      this.done = doneDataFromDb;
+  taskDataCheck(type) {
+    if (!this.storage.getData(type)) {
+      return false;
     }
+    return true;
+  }
+
+  addTaskDataTemplateToDB(type) {
+    this.storage.addData(type, this[type]);
+  }
+
+  overwriteTaskDataModel(type) {
+    this[type] = this.storage.getData(type);
   }
 
   addTaskToDb(type, value) {
     if (this[type]) {
-      this[type].data.push(value);
+      this[type].data.unshift(value);
       this.updateLocalStorage(type);
     } else {
       console.log(`Invalid type of data: ${type}`);
@@ -55,6 +57,13 @@ export default class TaskModel {
   }
 
   getTasks(type) {
-    return this[type].data;
+    return this[type]?.data;
+  }
+  getDefaultTasksFromDB(type) {
+    return this.storage.getData(type)?.data;
+  }
+
+  createTaskId() {
+    return new Date().getTime();
   }
 }
