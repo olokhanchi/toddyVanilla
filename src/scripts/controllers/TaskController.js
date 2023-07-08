@@ -2,36 +2,43 @@ export default class TaskController {
   constructor(model, view) {
     this.model = model;
     this.view = view;
-    this.addBtnMission = 'newTask'; // save name
-    this.addBtnMode = 'add';
-    this.renderAvailableTasks();
+    this.type = null; // todo, doing or done
+    
+
+    this.taskAppFirstRun();
   }
 
-  renderAvailableTasks() {
-    const types = ['todo', 'doing', 'done'];
-    for (const type of types) {
-      const tasks = this.model.getTasks(type);
-      this.view.renderTasks(type, tasks);
+  taskAppFirstRun() {
+    for (const taskType of this.model.taskTypes) {
+      switch (this.model.taskDataCheck(taskType)) {
+        case false:
+          this.model.addTaskDataTemplateToDB(taskType);
+          const defaultTasks = this.model.getTasks(taskType);
+          this.view.renderDefaultTasks(taskType, defaultTasks);
+          break;
+        case true:
+          this.model.overwriteTaskDataModel(taskType);
+          const tasks = this.model.getDefaultTasksFromDB(taskType);
+          this.view.renderDefaultTasks(taskType, tasks);
+      }
     }
   }
 
-  addTask(type, id, description) {
-    const task = { id: id, description: description };
-    this.model.addTaskToDb(type, task);
-    this.updateView();
+  addBtnClicked() {
+    this.view.resetBtnView();
+    this.view.changeBtnMode('delete');
+    this.view.showTaskField();
   }
-
-  removeTask(type, id) {
-    this.model.removeTaskfromDb(type, id);
-    this.updateView(type);
+  deleteBtnClicked() {
+    this.view.resetBtnView();
+    this.view.removeTaskField();
   }
-
-  updateView(type) {
-    const tasks = this.model.getTasks(type);
-    this.view.renderTasks(type, tasks);
-  }
-
-  changeAddBtnModeTo(mode){
-    
+  saveBtnClicked() {
+    const id = this.model.createTaskId();
+    this.view.taskId = id;
+    this.view.resetBtnView();
+    this.view.saveNewTaskItem();
+    const description = this.view.taskValue;
+    this.model.addTaskToDb(this.type, { id: id, description: description });
   }
 }
