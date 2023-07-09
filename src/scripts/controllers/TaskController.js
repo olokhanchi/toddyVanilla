@@ -3,7 +3,6 @@ export default class TaskController {
     this.model = model;
     this.view = view;
     this.type = null; // todo, doing or done
-    
 
     this.taskAppFirstRun();
   }
@@ -26,19 +25,24 @@ export default class TaskController {
 
   addBtnClicked() {
     this.view.resetBtnView();
-    this.view.changeBtnMode('delete');
+    this.view.changeBtnMode("delete");
     this.view.showTaskField();
   }
+
   deleteBtnClicked() {
     this.view.resetBtnView();
     this.view.removeTaskField();
   }
+
   saveBtnClicked() {
     const id = this.model.createTaskId();
     this.view.taskId = id;
     this.view.resetBtnView();
     this.view.saveNewTaskItem();
     const description = this.view.taskValue;
-    this.model.addTaskToDb(this.type, { id: id, description: description });
+    this.model.addTaskToDb(this.type, {
+      id: id,
+      description: description.replace(/\n/g, "<br>"),
+    });
   }
 }

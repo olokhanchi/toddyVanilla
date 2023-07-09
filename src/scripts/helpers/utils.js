@@ -7,19 +7,19 @@ export default class U {
   //Todo
   static todoDataTemplate() {
     let todoData = new Map();
-    todoData.set('todo', {
-      name: 'todo',
-      emoji: '&#x1F600',
-      tasks: [{ id: '1', description: 'my first task' }],
+    todoData.set("todo", {
+      name: "todo",
+      emoji: "&#x1F600",
+      tasks: [{ id: "1", description: "my first task" }],
     });
-    todoData.set('doing', {
-      name: 'doing',
-      emoji: '&#x1F600',
+    todoData.set("doing", {
+      name: "doing",
+      emoji: "&#x1F600",
       tasks: [],
     });
-    todoData.set('done', {
-      name: 'done',
-      emoji: '&#x1F600',
+    todoData.set("done", {
+      name: "done",
+      emoji: "&#x1F600",
       tasks: [],
     });
     return todoData;
@@ -42,16 +42,22 @@ export default class U {
    </div>`;
   }
 
-  static taskTemplate(id = 'id', description, title = 'Right click to edit or delete', editable = false) {
+  static taskTemplate(
+    id = "id",
+    description,
+    title = "Right click to edit or delete",
+    editable = false
+  ) {
     return `
-    <div data-task-id="${id}" draggable='true' class="task-item ${editable ? 'scaleX' : ''}" title="${title}">
-    <div class="task-item_text" contenteditable=${editable} spellcheck="true">
+    <div data-task-id="${id}" draggable="true" class="task-item ${
+      editable ? "scaleX" : ""
+    }" title="${title}">
+    <div class="task-item_text" contenteditable="${editable}" spellcheck="true">
       ${description}
     </div>
   </div>
     `;
   }
-
 
   static findTargetUp(element, closestValue) {
     if (element.target) {
@@ -63,12 +69,12 @@ export default class U {
   static multiplePress(eventElement, firstKey, secondKey, callback) {
     let firstKeyPressed = false;
 
-    eventElement.addEvesntListener('keydown', (event) => {
+    eventElement.addEvesntListener("keydown", (event) => {
       if (event.key === firstKey.toString()) {
         firstKeyPressed = true;
       }
 
-      if (event.key === 'Enter') {
+      if (event.key === "Enter") {
         event.preventDefault();
       }
 
@@ -77,7 +83,7 @@ export default class U {
       }
     });
 
-    eventElement.addEventListener('keyup', (event) => {
+    eventElement.addEventListener("keyup", (event) => {
       if (event.key === firstKey.toString()) {
         firstKeyPressed = false;
       }
@@ -87,6 +93,7 @@ export default class U {
   static addEvent(type, element, handler) {
     element?.addEventListener(type, handler);
   }
+
   static removeEvent(type, element, handler) {
     element?.removeEventListener(type, handler);
     console.log(`${type} - event removed on ${element} element`);
