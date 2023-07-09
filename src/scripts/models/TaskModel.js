@@ -1,20 +1,21 @@
-import Storage from '../storage/db';
+import Storage from "../storage/db";
 
 export default class TaskModel {
-  taskTypes = ['todo', 'doing', 'done'];
+  taskTypes = ["todo", "doing", "done"];
+
   constructor() {
     this.storage = new Storage();
 
     this.todo = {
-      properties: { name: 'todo', emoji: '😭' },
+      properties: { name: "todo", emoji: "😭" },
       data: [],
     };
     this.doing = {
-      properties: { name: 'doing', emoji: '🥺' },
+      properties: { name: "doing", emoji: "🥺" },
       data: [],
     };
     this.done = {
-      properties: { name: 'done', emoji: '😉' },
+      properties: { name: "done", emoji: "😉" },
       data: [],
     };
   }
@@ -59,6 +60,7 @@ export default class TaskModel {
   getTasks(type) {
     return this[type]?.data;
   }
+
   getDefaultTasksFromDB(type) {
     return this.storage.getData(type)?.data;
   }
