@@ -20,16 +20,4 @@ export default class Storage {
     const data = this.db.getItem(key);
     return data ? JSON.parse(data) : null;
   }
-
-  updateData(key, updatedValue) {
-    const existingData = this.getData(key);
-    if (existingData) {
-      const updatedData = { ...existingData, ...updatedValue };
-      this.saveData(key, updatedData);
-    }
-  }
-
-  deleteData(key) {
-    this.db.removeItem(key);
-  }
 }
