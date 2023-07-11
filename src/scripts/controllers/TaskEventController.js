@@ -1,117 +1,201 @@
-import U from "../helpers/utils";
+import U from '../helpers/utils';
 
 export default class TaskEventController {
   constructor(view, controller) {
     this.view = view;
     this.controller = controller;
-    this.addBtnMode = "add";
-    this.addBtnRole = "addTask"; // or saveBlockName
-    this.addBtnClicked = false;
+    this.addBtnMode = 'add';
+    this.addBtnRole = 'addTask'; // or saveBlockName
+    this.mouseOnAddBtn = true;
 
+    this.handleClickEvent = this.handleClick.bind(this);
+    this.handleDoubleClickEvent = this.handleDoubleClick.bind(this);
     this.handleOverOutEvent = this.handleOverOut.bind(this);
+    this.handleInputEvent = this.handleInput.bind(this);
+    this.handleBlurEvent = this.handleBlur.bind(this);
 
     this.bindListeners();
-    // this.removeListeners();
+    //    this.removeAllListeners();
   }
 
-  handleClick(e) {
-    const targetIsAddBtn = e.target.hasAttribute("data-btn-add");
-    const addBtnRoleNewTask = this.addBtnRole === "addTask";
+  //event handlers
+
+  handleClick({ target }) {
+    const targetIsAddBtn = target.hasAttribute('data-btn-add');
+    const targetIsClearAllBtn = target.hasAttribute('data-btn-clear-all');
+    const addBtnRoleNewTask = this.addBtnRole === 'addTask';
 
     if (targetIsAddBtn && addBtnRoleNewTask) {
-      const target = e.target;
       const content = target.parentNode.nextElementSibling;
       this.view.currentAddBtn = target;
       this.controller.type = target.dataset.btnType;
       this.view.currentClickedContent = content;
+      this.mouseOnAddBtn = true;
 
-      U.addEvent("mouseover", target, this.handleOverOutEvent);
-      U.addEvent("mouseout", target, this.handleOverOutEvent);
+      U.addEvent('mouseover', target, this.handleOverOutEvent);
+      U.addEvent('mouseout', target, this.handleOverOutEvent);
 
       switch (this.addBtnMode) {
-        case "add":
-          this.handleAddButton();
+        case 'add':
+          this.handleAddButtonAction();
           break;
-        case "delete":
-          this.handleDeleteButton();
+        case 'delete':
+          this.handleDeleteButtonAction();
+          U.removeEvent('mouseover', this.view.currentAddBtn, this.handleOverOutEvent);
+          U.removeEvent('mouseout', this.view.currentAddBtn, this.handleOverOutEvent);
           break;
-        case "save":
-          this.handleSaveButton();
+        case 'save':
+          this.handleSaveButtonAction('task');
+          U.removeEvent('mouseover', this.view.currentAddBtn, this.handleOverOutEvent);
+          U.removeEvent('mouseout', this.view.currentAddBtn, this.handleOverOutEvent);
           break;
-
         default:
-          console.log("Mode not found");
+          console.log('Mode not found');
           break;
       }
+    }
+
+    if (targetIsAddBtn && !addBtnRoleNewTask) {
+      this.view.currentAddBtn = target;
+      // this.mouseOnAddBtn = true;
+
+      switch (this.addBtnMode) {
+        case 'cancel':
+          this.handleCancelButtonAction();
+          break;
+        case 'save':
+          this.handleSaveButtonAction('blockName');
+          break;
+        default:
+          console.log('Mode not found');
+          break;
+      }
+    }
+
+    if (targetIsClearAllBtn) {
+      this.controller.type = target.dataset.btnType;
+      this.handleClearAllButtonAction();
+    }
+  }
+
+  handleDoubleClick({ target }) {
+    const targetIsBlockName = target.hasAttribute('data-block-name');
+    const targetIsTaskField = target.hasAttribute('data-task-field');
+
+    console.log(targetIsTaskField);
+
+    if (targetIsBlockName) {
+      this.view.currentBlockNameField = target;
+      this.view.currentAddBtn = target.nextElementSibling;
+      this.controller.type = target.dataset.nameType;
+      this.handleBlockNameEditAction();
+    }
+
+    if (targetIsTaskField) {
+      this.view.currentTaskField = target;
+      this.view.currentAddBtn = target.closest('[data-task-block]').querySelector('[data-btn-add]');
+      this.handleTaskItemEditAction();
     }
   }
 
   handleOverOut() {
-    console.log("over");
-    this.addBtnClicked = !this.addBtnClicked;
+    this.mouseOnAddBtn = !this.mouseOnAddBtn;
   }
 
-  handleInput(e) {
-    this.addBtnMode = "add";
-    this.view.currentTaskField = e.target;
-    if (e.target.textContent.trim()) {
-      this.addBtnMode = "save";
-      this.view.changeBtnMode("save");
-    } else {
-      this.addBtnMode = "delete";
-      this.view.changeBtnMode("delete");
-    }
-  }
+  handleInput({ target }) {
+    const targetIsTaskField = target.hasAttribute('data-task-field');
+    const targetIsBlockNameField = target.hasAttribute('data-block-name');
 
-  handleBlur(e) {
-    console.log(this.addBtnMode);
-    const targetIsTaskField = e.target.hasAttribute("contenteditable");
-    if (targetIsTaskField && this.addBtnClicked) {
-      this.addBtnMode = "add";
-
-      U.removeEvent(
-        "mouseover",
-        this.view.currentAddBtn,
-        this.handleOverOutEvent
-      );
-      U.removeEvent(
-        "mouseout",
-        this.view.currentAddBtn,
-        this.handleOverOutEvent
-      );
-
-      if (e.target.textContent.trim()) {
-        this.handleSaveButton();
+    if (targetIsTaskField) {
+      this.addBtnMode = 'add';
+      this.view.currentTaskField = target;
+      if (target.textContent.trim()) {
+        this.addBtnMode = 'save';
+        this.view.changeBtnMode('save');
       } else {
-        this.handleDeleteButton();
+        this.addBtnMode = 'delete';
+        this.view.changeBtnMode('delete');
       }
     }
+
+    if (targetIsBlockNameField) {
+      this.controller.type = target.dataset.nameType;
+      this.addBtnMode = 'save';
+      this.controller.blockNameHasChanges();
+    }
   }
 
-  handleAddButton() {
+  handleBlur({ target }) {
+    const targetIsTaskField = target.hasAttribute('data-task-field');
+
+    if (targetIsTaskField && !this.mouseOnAddBtn) {
+      if (target.textContent.trim()) {
+        this.handleSaveButtonAction('task');
+      } else {
+        this.handleDeleteButtonAction();
+      }
+      U.removeEvent('mouseover', this.view.currentAddBtn, this.handleOverOutEvent);
+      U.removeEvent('mouseout', this.view.currentAddBtn, this.handleOverOutEvent);
+    }
+  }
+
+  //  actions
+
+  handleAddButtonAction() {
     this.controller.addBtnClicked();
-    this.addBtnMode = "delete";
+    this.addBtnMode = 'delete';
   }
 
-  handleDeleteButton() {
+  handleDeleteButtonAction() {
     this.controller.deleteBtnClicked();
-    this.addBtnMode = "add";
+    this.addBtnMode = 'add';
   }
 
-  handleSaveButton() {
-    this.controller.saveBtnClicked();
-    this.addBtnMode = "add";
+  handleSaveButtonAction(role) {
+    this.controller.saveBtnClickedFor(role);
+    this.addBtnMode = 'add';
+    this.addBtnRole = 'addTask';
   }
 
+  handleClearAllButtonAction() {
+    this.controller.clearAllBtnClicked();
+    this.addBtnMode = 'add';
+  }
+
+  handleCancelButtonAction() {
+    this.controller.cancelBtnClicked();
+    this.addBtnMode = 'add';
+    this.addBtnRole = 'addTask';
+  }
+
+  handleBlockNameEditAction() {
+    this.controller.blockNameReceiveFocus();
+    this.addBtnMode = 'cancel';
+    this.addBtnRole = 'saveBlockName';
+  }
+
+  handleBlockNameSaveAction() {
+    this.controller.blockNameLostFocus();
+    this.addBtnMode = 'add';
+    this.addBtnRole = 'addTask';
+  }
+
+  handleTaskItemEditAction() {
+    this.controller.taskItemReceiveFocus();
+  }
+
+  // event binding and detach
   bindListeners() {
-    U.addEvent("click", this.view.wrapper, (e) => this.handleClick(e));
-    U.addEvent("input", this.view.wrapper, (e) => this.handleInput(e));
-    U.addEvent("focusout", this.view.wrapper, (e) => this.handleBlur(e));
+    U.addEvent('click', this.view.wrapper, this.handleClickEvent);
+    U.addEvent('dblclick', this.view.wrapper, this.handleDoubleClickEvent);
+    U.addEvent('input', this.view.wrapper, this.handleInputEvent);
+    U.addEvent('focusout', this.view.wrapper, this.handleBlurEvent);
   }
 
-  removeListeners() {
-    U.removeEvent("click", this.view.wrapper, () => this.handleClick());
-    U.removeEvent("input", this.view.wrapper, () => this.handleInput());
-    U.removeEvent("focusout", this.view.wrapper, () => this.handleBlur());
+  removeAllListeners() {
+    U.removeEvent('click', this.view.wrapper, this.handleClickEvent);
+    U.removeEvent('dblclick', this.view.wrapper, this.handleDoubleClickEvent);
+    U.removeEvent('input', this.view.wrapper, this.handleInputEvent);
+    U.removeEvent('focusout', this.view.wrapper, this.handleBlurEvent);
   }
 }

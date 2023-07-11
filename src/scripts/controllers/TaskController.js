@@ -25,7 +25,7 @@ export default class TaskController {
 
   addBtnClicked() {
     this.view.resetBtnView();
-    this.view.changeBtnMode("delete");
+    this.view.changeBtnMode('delete');
     this.view.showTaskField();
   }
 
@@ -34,15 +34,52 @@ export default class TaskController {
     this.view.removeTaskField();
   }
 
-  saveBtnClicked() {
-    const id = this.model.createTaskId();
-    this.view.taskId = id;
+  saveBtnClickedFor(role) {
+    if (role === 'task') {
+      const id = this.model.createTaskId();
+      this.view.taskId = id;
+      this.view.resetBtnView();
+      this.view.saveNewTaskItem();
+      const description = this.view.taskValue;
+      this.model.addTaskToDb(this.type, {
+        id: id,
+        description: description.replace(/\n/g, '<br>'),
+      });
+    }
+    if (role === 'blockName') {
+      this.blockNameLostFocus();
+    }
+  }
+
+  clearAllBtnClicked() {
+    this.view.clearAllTasks(this.type);
+    this.model.clearAllTasks(this.type);
+  }
+
+  cancelBtnClicked() {
     this.view.resetBtnView();
-    this.view.saveNewTaskItem();
-    const description = this.view.taskValue;
-    this.model.addTaskToDb(this.type, {
-      id: id,
-      description: description.replace(/\n/g, "<br>"),
-    });
+    this.view.blockNameSave();
+  }
+
+  blockNameReceiveFocus() {
+    this.view.changeBtnMode('cancel');
+    this.view.blockNameEdit();
+  }
+
+  blockNameLostFocus() {
+    const newName = this.view.currentBlockNameField.innerText.trim();
+    this.view.resetBtnView();
+    this.view.changeBtnMode('add');
+    this.view.blockNameSave();
+    this.model.changeTaskBlockName(this.type, newName);
+  }
+
+  blockNameHasChanges() {
+    this.view.changeBtnMode('save');
+  }
+
+  taskItemReceiveFocus() {
+    this.view.taskItemEdit();
+    this.view.changeBtnMode('cancel');
   }
 }

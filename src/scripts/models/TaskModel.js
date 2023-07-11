@@ -1,30 +1,27 @@
-import Storage from "../storage/db";
+import Storage from '../storage/db';
 
 export default class TaskModel {
-  taskTypes = ["todo", "doing", "done"];
+  taskTypes = ['todo', 'doing', 'done'];
 
   constructor() {
     this.storage = new Storage();
 
     this.todo = {
-      properties: { name: "todo", emoji: "😭" },
+      properties: { name: 'todo', emoji: '😭' },
       data: [],
     };
     this.doing = {
-      properties: { name: "doing", emoji: "🥺" },
+      properties: { name: 'doing', emoji: '🥺' },
       data: [],
     };
     this.done = {
-      properties: { name: "done", emoji: "😉" },
+      properties: { name: 'done', emoji: '😉' },
       data: [],
     };
   }
 
   taskDataCheck(type) {
-    if (!this.storage.getData(type)) {
-      return false;
-    }
-    return true;
+    return !!this.storage.getData(type);
   }
 
   addTaskDataTemplateToDB(type) {
@@ -53,6 +50,11 @@ export default class TaskModel {
     }
   }
 
+  clearAllTasks(type) {
+    this[type].data = [];
+    this.updateLocalStorage(type);
+  }
+
   updateLocalStorage(type) {
     this.storage.addData(type, this[type]);
   }
@@ -61,11 +63,25 @@ export default class TaskModel {
     return this[type]?.data;
   }
 
+  updateTask(type, id, newDescription) {
+    this.getTasks(type).map((task) => {
+      if (task.id === id) {
+        return (task.description = newDescription);
+      }
+    });
+    this.updateLocalStorage(type);
+  }
+
   getDefaultTasksFromDB(type) {
     return this.storage.getData(type)?.data;
   }
 
   createTaskId() {
     return new Date().getTime();
+  }
+
+  changeTaskBlockName(type, newName) {
+    this[type].properties.name = newName;
+    this.updateLocalStorage(type);
   }
 }
