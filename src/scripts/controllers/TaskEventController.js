@@ -5,8 +5,9 @@ export default class TaskEventController {
     this.view = view;
     this.controller = controller;
     this.addBtnMode = 'add';
-    this.addBtnRole = 'addTask'; // or saveBlockName
+    this.addBtnRole = 'addTask'; // saveBlockName, saveEditedTask
     this.mouseOnAddBtn = true;
+    this.hasDoubleClick = false;
 
     this.handleClickEvent = this.handleClick.bind(this);
     this.handleDoubleClickEvent = this.handleDoubleClick.bind(this);
@@ -39,6 +40,9 @@ export default class TaskEventController {
         case 'add':
           this.handleAddButtonAction();
           break;
+        case 'cancel':
+          this.handleCancelButtonAction('task');
+          break;
         case 'delete':
           this.handleDeleteButtonAction();
           U.removeEvent('mouseover', this.view.currentAddBtn, this.handleOverOutEvent);
@@ -57,11 +61,12 @@ export default class TaskEventController {
 
     if (targetIsAddBtn && !addBtnRoleNewTask) {
       this.view.currentAddBtn = target;
-      // this.mouseOnAddBtn = true;
+      this.mouseOnAddBtn = true;
+      this.hasDoubleClick = false;
 
       switch (this.addBtnMode) {
         case 'cancel':
-          this.handleCancelButtonAction();
+          this.handleCancelButtonAction('blockName');
           break;
         case 'save':
           this.handleSaveButtonAction('blockName');
@@ -82,16 +87,17 @@ export default class TaskEventController {
     const targetIsBlockName = target.hasAttribute('data-block-name');
     const targetIsTaskField = target.hasAttribute('data-task-field');
 
-    console.log(targetIsTaskField);
-
-    if (targetIsBlockName) {
+    if (targetIsBlockName && !this.hasDoubleClick) {
+      this.hasDoubleClick = true;
       this.view.currentBlockNameField = target;
       this.view.currentAddBtn = target.nextElementSibling;
       this.controller.type = target.dataset.nameType;
       this.handleBlockNameEditAction();
     }
 
-    if (targetIsTaskField) {
+    if (targetIsTaskField && !this.hasDoubleClick) {
+      this.hasDoubleClick = true;
+      this.mouseOnAddBtn = false;
       this.view.currentTaskField = target;
       this.view.currentAddBtn = target.closest('[data-task-block]').querySelector('[data-btn-add]');
       this.handleTaskItemEditAction();
@@ -129,6 +135,7 @@ export default class TaskEventController {
     const targetIsTaskField = target.hasAttribute('data-task-field');
 
     if (targetIsTaskField && !this.mouseOnAddBtn) {
+      this.hasDoubleClick = false;
       if (target.textContent.trim()) {
         this.handleSaveButtonAction('task');
       } else {
@@ -162,8 +169,8 @@ export default class TaskEventController {
     this.addBtnMode = 'add';
   }
 
-  handleCancelButtonAction() {
-    this.controller.cancelBtnClicked();
+  handleCancelButtonAction(role) {
+    this.controller.cancelBtnClicked(role);
     this.addBtnMode = 'add';
     this.addBtnRole = 'addTask';
   }
@@ -182,6 +189,7 @@ export default class TaskEventController {
 
   handleTaskItemEditAction() {
     this.controller.taskItemReceiveFocus();
+    this.addBtnRole = 'saveEditedTask';
   }
 
   // event binding and detach
