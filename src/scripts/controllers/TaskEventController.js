@@ -6,7 +6,7 @@ export default class TaskEventController {
     this.controller = controller;
     this.addBtnMode = 'add';
     this.addBtnRole = 'addTask'; // saveBlockName, saveEditedTask
-    this.mouseOnAddBtn = true;
+    this.mouseOnAddBtn = false;
     this.hasDoubleClick = false;
 
     this.handleClickEvent = this.handleClick.bind(this);
@@ -45,18 +45,17 @@ export default class TaskEventController {
           break;
         case 'delete':
           this.handleDeleteButtonAction();
-          U.removeEvent('mouseover', this.view.currentAddBtn, this.handleOverOutEvent);
-          U.removeEvent('mouseout', this.view.currentAddBtn, this.handleOverOutEvent);
           break;
         case 'save':
           this.handleSaveButtonAction('task');
-          U.removeEvent('mouseover', this.view.currentAddBtn, this.handleOverOutEvent);
-          U.removeEvent('mouseout', this.view.currentAddBtn, this.handleOverOutEvent);
           break;
         default:
           console.log('Mode not found');
           break;
       }
+
+      // U.removeEvent('mouseover', this.view.currentAddBtn, this.handleOverOutEvent);
+      // U.removeEvent('mouseout', this.view.currentAddBtn, this.handleOverOutEvent);
     }
 
     if (targetIsAddBtn && !addBtnRoleNewTask) {
@@ -189,7 +188,6 @@ export default class TaskEventController {
 
   handleTaskItemEditAction() {
     this.controller.taskItemReceiveFocus();
-    this.addBtnRole = 'saveEditedTask';
   }
 
   // event binding and detach
