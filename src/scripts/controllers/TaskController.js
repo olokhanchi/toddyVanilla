@@ -56,7 +56,7 @@ export default class TaskController {
     this.model.clearAllTasks(this.type);
   }
 
-  cancelBtnClicked() {
+  cancelBtnClicked(role) {
     this.view.resetBtnView();
     this.view.blockNameSave();
   }

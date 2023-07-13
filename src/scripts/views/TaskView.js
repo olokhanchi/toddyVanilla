@@ -40,6 +40,7 @@ export default class TaskView {
 
   saveNewTaskItem() {
     this.currentTaskField.setAttribute('contenteditable', false);
+    this.currentTaskField.removeAttribute('new');
     this.currentTaskField.parentNode.setAttribute('data-task-id', this.taskId);
     this.currentTaskField.parentNode.classList.remove('scaleX');
     this.taskValue = this.currentTaskField.innerText;
