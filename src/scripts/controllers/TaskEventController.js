@@ -53,9 +53,6 @@ export default class TaskEventController {
           console.log('Mode not found');
           break;
       }
-
-      // U.removeEvent('mouseover', this.view.currentAddBtn, this.handleOverOutEvent);
-      // U.removeEvent('mouseout', this.view.currentAddBtn, this.handleOverOutEvent);
     }
 
     if (targetIsAddBtn && !addBtnRoleNewTask) {
@@ -88,6 +85,7 @@ export default class TaskEventController {
 
     if (targetIsBlockName && !this.hasDoubleClick) {
       this.hasDoubleClick = true;
+      this.addBtnRole = 'saveEditedTask';
       this.view.currentBlockNameField = target;
       this.view.currentAddBtn = target.nextElementSibling;
       this.controller.type = target.dataset.nameType;
@@ -95,6 +93,7 @@ export default class TaskEventController {
     }
 
     if (targetIsTaskField && !this.hasDoubleClick) {
+      this.addBtnRole = 'saveEditedTask';
       this.hasDoubleClick = true;
       this.mouseOnAddBtn = false;
       this.view.currentTaskField = target;
