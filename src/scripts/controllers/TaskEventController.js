@@ -94,6 +94,7 @@ export default class TaskEventController {
 
     if (targetIsTaskField && !this.hasDoubleClick) {
       this.addBtnRole = 'saveEditedTask';
+      this.addBtnMode = 'cancel';
       this.hasDoubleClick = true;
       this.mouseOnAddBtn = false;
       this.view.currentTaskField = target;

@@ -1,11 +1,10 @@
 @import '../variables';
 
 .weather-wrapper {
-  // background-image: url('https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80');
+  background-image: url('https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: bottom;
-  color: #fff;
   font-size: 18px;
   display: flex;
   flex-direction: column;
@@ -27,19 +26,23 @@
   padding: 10vh 4vw;
   flex-grow: 1;
   z-index: 1;
+  color: #fff;
 }
+
 .upper-block_header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
+
 .location {
   display: inline-block;
   font-size: 5vw;
   font-weight: 700;
   text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
 }
+
 .change-bg-btn {
   display: inline-block;
   padding: 10px;
@@ -47,6 +50,7 @@
   border-radius: 10px;
   cursor: pointer;
   user-select: none;
+
   &:active {
     transform: scale(0.95);
   }
@@ -58,22 +62,27 @@
 }
 
 .holiday-date {
-  background-color: #50adbba0;
+  background-color: var(--t-color-2);
   padding: 5px 10px;
   border-radius: 20px;
   margin: 7px 0;
   display: inline-block;
   font-size: 16px;
 }
+
 .holiday-description {
   display: inline-block;
   text-shadow: 0px 0px 5px rgba(0, 0, 0);
 }
+
 .main-block {
+  color: var(--t-color-1);
+
   z-index: 1;
   padding: 20px 4vw;
-  background-color: rgb(0, 0, 0);
+  background-color: var(--main-bg-color);
 }
+
 .weather-info {
   display: flex;
   justify-content: space-between;
@@ -81,6 +90,7 @@
   flex-wrap: wrap;
   gap: 2vw;
 }
+
 .current-weather {
   flex: 1 1 auto;
   display: flex;
@@ -90,9 +100,11 @@
     height: 150px;
     background-color: rgba(230, 51, 51, 0.475);
   }
+
   .weather-type {
     font-size: 24px;
   }
+
   .weather-temp {
     font-size: 56px;
     font-weight: bold;
@@ -110,6 +122,7 @@
   background-color: rgba(230, 51, 51, 0.475);
   margin-right: 15px;
 }
+
 .weather-description {
   display: inline-block;
   margin: auto 0;
@@ -119,6 +132,7 @@
   font-size: 36px;
   font-weight: bold;
 }
+
 .weather-humidity,
 .weather-wind {
   font-size: 16px;
