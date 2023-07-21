@@ -45,9 +45,7 @@ export default class U {
   static taskTemplate(id = 'id', description, title = 'Right click to edit or delete', editable = false) {
     return `
     <div data-task-id="${id}" draggable="true" class="task-item ${editable ? 'scaleX' : ''}" title="${title}">
-    <div data-task-field ${
-      editable ? 'data-new' : ''
-    } class="task-item_text" contenteditable="${editable}" spellcheck="true">
+    <div data-task-field class="task-item_text" contenteditable="${editable}" spellcheck="true">
       ${description}
     </div>
   </div>
