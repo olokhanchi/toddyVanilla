@@ -11,10 +11,10 @@ export default class TaskView {
     this.todo = this.todoBlock?.querySelector('[data-content]');
     this.doing = this.doingBlock?.querySelector('[data-content]');
     this.done = this.doneBlock?.querySelector('[data-content]');
+
     this.taskTemplate = U.taskTemplate('', '', 'New task', true);
-    this.currentAddBtn = null;
-    this.currentClickedContent = null;
-    this.currentTaskField = null;
+    this.addBtn = null;
+    this.taskField = null;
     this.taskId = null;
     this.taskValue = null;
     this.currentBlockNameField = null;
@@ -28,28 +28,14 @@ export default class TaskView {
     this[type].insertAdjacentHTML('afterbegin', taskItemsArray.join(''));
   }
 
-  showTaskField() {
-    this.currentClickedContent.insertAdjacentHTML('afterbegin', this.taskTemplate);
-    this.currentTaskField = this.currentClickedContent.querySelector('[contenteditable="true"]');
-    this.currentTaskField.focus();
+  showTaskField(contentType) {
+    this[contentType].insertAdjacentHTML('afterbegin', this.taskTemplate);
+    this.taskField = this[contentType].querySelector('[contenteditable="true"]');
+    this.taskField.focus();
   }
 
-  removeTaskField() {
-    this.currentTaskField.parentNode.remove();
-  }
-
-  saveNewTaskItem() {
-    this.currentTaskField.setAttribute('contenteditable', false);
-    this.currentTaskField.removeAttribute('new');
-    this.currentTaskField.parentNode.setAttribute('data-task-id', this.taskId);
-    this.currentTaskField.parentNode.classList.remove('scaleX');
-    this.taskValue = this.currentTaskField.innerText;
-  }
-
-  taskItemEdit() {
-    this.currentTaskField.setAttribute('contenteditable', true);
-    this.currentTaskField.parentNode.setAttribute('draggable', false);
-    U.moveCursorToEnd(this.currentTaskField);
+  deleteTaskField() {
+    this.taskField.parentNode.remove();
   }
 
   resetBtnView() {
@@ -59,14 +45,28 @@ export default class TaskView {
     });
   }
 
-  blockNameEdit() {
-    this.currentBlockNameField.setAttribute('contenteditable', true);
-    U.moveCursorToEnd(this.currentBlockNameField);
+  saveNewTaskItem() {
+    this.taskField.setAttribute('contenteditable', false);
+    this.taskField.removeAttribute('new');
+    this.taskField.parentNode.setAttribute('data-task-id', this.taskId);
+    this.taskField.parentNode.classList.remove('scaleX');
+    this.taskValue = this.taskField.innerText;
   }
 
-  blockNameSave() {
-    this.currentBlockNameField.setAttribute('contenteditable', false);
-  }
+  // taskItemEdit() {
+  //   this.taskField.setAttribute('contenteditable', true);
+  //   this.taskField.parentNode.setAttribute('draggable', false);
+  //   U.moveCursorToEnd(this.taskField);
+  // }
+
+  // blockNameEdit() {
+  //   this.currentBlockNameField.setAttribute('contenteditable', true);
+  //   U.moveCursorToEnd(this.currentBlockNameField);
+  // }
+
+  // blockNameSave() {
+  //   this.currentBlockNameField.setAttribute('contenteditable', false);
+  // }
 
   clearAllTasks(type) {
     this[type].innerHTML = '';
@@ -75,20 +75,20 @@ export default class TaskView {
   changeBtnMode(mode) {
     switch (mode) {
       case 'add':
-        this.currentAddBtn.innerText = '+' + mode;
-        this.currentAddBtn.style.removeProperty('color');
+        this.addBtn.innerText = '+' + mode;
+        this.addBtn.style.removeProperty('color');
         break;
       case 'delete':
-        this.currentAddBtn.innerText = '✗ ' + mode;
-        this.currentAddBtn.style.color = 'var(--t-color-4)';
+        this.addBtn.innerText = '✗ ' + mode;
+        this.addBtn.style.color = 'var(--t-color-4)';
         break;
       case 'save':
-        this.currentAddBtn.innerText = '✓ ' + mode;
-        this.currentAddBtn.style.color = '#009f0b';
+        this.addBtn.innerText = '✓ ' + mode;
+        this.addBtn.style.color = '#009f0b';
         break;
       case 'cancel':
-        this.currentAddBtn.innerText = mode;
-        this.currentAddBtn.style.color = 'var(--t-color-3)';
+        this.addBtn.innerText = mode;
+        this.addBtn.style.color = 'var(--t-color-3)';
         break;
     }
   }

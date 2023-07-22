@@ -93,8 +93,8 @@ export default class U {
     element.focus();
   }
 
-  static addEvent(type, element, handler) {
-    element?.addEventListener(type, handler);
+  static addEvent(type, element, handler, capture = false) {
+    element?.addEventListener(type, handler, capture);
   }
 
   static removeEvent(type, element, handler) {

@@ -1,5 +1,4 @@
 import U from '../helpers/utils';
-
 export default class TaskEventController {
   constructor(view, controller) {
     this.view = view;
