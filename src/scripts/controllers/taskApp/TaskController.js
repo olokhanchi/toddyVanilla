@@ -24,13 +24,43 @@ export default class TaskController {
   }
 
   //ACTIONS ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-  addNewTaskAction() {}
-  saveNewTaskAction() {}
-  deleteNewTaskAction() {}
+  addNewTaskAction() {
+    this.view.showTaskField(this.type);
+    this.view.changeBtnMode('delete');
+  }
+
+  deleteNewTaskAction() {
+    this.view.deleteTaskField();
+    this.view.changeBtnMode('add');
+    this.view.resetBtnView();
+  }
+
+  changeViewBtnModeAction(mode) {
+    this.view.changeBtnMode(mode);
+  }
+
+  saveNewTaskAction() {
+    console.log(this.type);
+    const id = this.model.createTaskId();
+    this.view.taskId = id;
+    this.view.resetBtnView();
+    this.view.saveNewTaskItem();
+    const description = this.view.taskValue;
+    this.model.addTaskToDb(this.type, {
+      id: id,
+      description: description.replace(/\n/g, '<br>'),
+    });
+  }
   editExistingTaskAction() {}
   editExistingTaskCancelAction() {}
   saveExistingTaskAction() {}
-  clearAllTasksAction() {}
+
+  clearAllTasksAction() {
+    console.log(this.type);
+    this.view.clearAllTasks(this.type);
+    this.model.clearAllTasks(this.type);
+  }
+
   blockNameEditAction() {}
   blockNameEditCancelAction() {}
   blockNameSaveAction() {}

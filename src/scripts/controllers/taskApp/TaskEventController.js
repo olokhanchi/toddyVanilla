@@ -8,9 +8,10 @@ export default class TaskEventController {
     this.addBtnMode = 'add'; //cancel, save or delete
     this.addBtnRole = 'newTask'; // saveBlockName or saveEditedTask
 
+    this.cancelBlur = false;
+
     this.handleClickEvent = this.handleClick.bind(this);
     this.handleDoubleClickEvent = this.handleDoubleClick.bind(this);
-    this.handleOverOutEvent = this.handleOverOut.bind(this);
     this.handleInputEvent = this.handleInput.bind(this);
     this.handleBlurEvent = this.handleBlur.bind(this);
 
@@ -22,15 +23,18 @@ export default class TaskEventController {
     const targetIsAddBtn = target.hasAttribute('data-btn-add');
     const targetIsClearAllBtn = target.hasAttribute('data-btn-clear-all');
 
-    const addBtnRoleNewTask = this.addBtnRole === 'addTask';
+    const addBtnRoleNewTask = this.addBtnRole === 'newTask';
 
     if (targetIsAddBtn && addBtnRoleNewTask) {
+      this.assignViewCurrentElements(target, 'click');
+
+      if (this.addBtnMode === 'save') return this.saveTaskEffect();
+
+      this.assignControllerObjectTypeField(target, 'click');
+
       switch (this.addBtnMode) {
         case 'add':
           this.addTaskEffect();
-          break;
-        case 'cancel':
-          this.cancelTaskEffect();
           break;
         case 'delete':
           this.deleteTaskEffect();
@@ -41,55 +45,117 @@ export default class TaskEventController {
         default:
           throw new Error(`There are no methods for ${this.addBtnMode} action`);
       }
+      return;
+    }
+
+    if (targetIsClearAllBtn) {
+      this.assignViewCurrentElements(target, 'click');
+      this.assignControllerObjectTypeField(target, 'click');
+      this.clearAllTasksEffect();
+    }
+  }
+
+  handleInput({ target }) {
+    const targetIsTaskField = target.hasAttribute('data-task-field');
+
+    if (targetIsTaskField) {
+      this.assignViewCurrentElements(target, 'input');
+
+      if (!target.textContent.trim()) {
+        this.emptyTaskValueEffect();
+        return;
+      }
+
+      this.fillTaskValueEffect();
     }
   }
 
   handleDoubleClick({ target }) {}
-  handleOverOut() {}
-  handleInput({ target }) {}
-  handleBlur({ target }) {}
+
+  handleBlur({ target }) {
+    const targetIsTaskField = target.hasAttribute('data-task-field');
+    const targetIsBlockNameField = target.hasAttribute('data-block-name');
+
+    if (targetIsTaskField) {
+      if (target.textContent.trim()) return this.saveTaskEffect();
+      this.deleteTaskEffect();
+    }
+
+    if (targetIsBlockNameField) {
+      this.controller.type = target.dataset.nameType;
+      this.controller.blockNameHasChanges();
+      this.addBtnMode = 'save';
+    }
+  }
   //USER EVENTS ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
   //USER EVENT EFFECTS ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
   addTaskEffect() {
-    this.addBtnMode = 'delete';
     this.controller.addNewTaskAction();
+    this.addBtnMode = 'delete';
   }
 
   cancelTaskEffect() {
     this.addBtnMode = 'add';
   }
 
+  fillTaskValueEffect() {
+    this.controller.changeViewBtnModeAction('save');
+    this.addBtnMode = 'save';
+  }
+
+  emptyTaskValueEffect() {
+    this.controller.changeViewBtnModeAction('delete');
+    this.addBtnMode = 'delete';
+  }
+
   saveTaskEffect() {
-    this.addBtnMode = 'add';
     this.controller.saveNewTaskAction();
+    this.addBtnMode = 'add';
   }
 
   deleteTaskEffect() {
-    this.addBtnMode = 'add';
     this.controller.deleteNewTaskAction();
+    this.addBtnMode = 'add';
   }
 
   clearAllTasksEffect() {
-    this.addBtnMode = 'add';
     this.controller.clearAllTasksAction();
+    this.addBtnMode = 'add';
   }
 
   editBlockNameEffect() {
     this.addBtnMode = 'cancel';
     this.addBtnRole = 'saveBlockName';
   }
-  editBlockNameCancelEffect() {}
-  saveBlockNameEffect() {}
+
+  editBlockNameCancelEffect() {
+    this.addBtnMode = 'add';
+    this.addBtnRole = 'newTask';
+  }
+
+  saveBlockNameEffect() {
+    this.addBtnMode = 'add';
+    this.addBtnRole = 'newTask';
+  }
 
   //USER EVENT EFFECTS ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
   //EVENT SETTERS FOR VIEW & CONTROLLER ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-  setViewEventContent(target) {}
-  setViewClickedBtn(target) {
-    this.view.currentAddBtn = target;
+  assignControllerObjectTypeField(target, eventType) {
+    if (eventType === 'click') this.controller.type = target.dataset.btnType;
   }
-  setViewTaskField(target) {}
+
+  assignViewCurrentElements(target, eventType) {
+    if (eventType === 'click') {
+      this.view.addBtn = target;
+      this.view.currentClickedContent = target.parentNode.nextElementSibling;
+    }
+    if (eventType === 'input') {
+      this.view.taskField = target;
+    }
+  }
+
   //EVENT SETTERS FOR VIEW & CONTROLLER ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
   //ON APP INIT OR DESTROY ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
@@ -97,7 +163,7 @@ export default class TaskEventController {
     U.addEvent('click', this.view.wrapper, this.handleClickEvent);
     U.addEvent('dblclick', this.view.wrapper, this.handleDoubleClickEvent);
     U.addEvent('input', this.view.wrapper, this.handleInputEvent);
-    U.addEvent('focusout', this.view.wrapper, this.handleBlurEvent);
+    U.addEvent('blur', this.view.wrapper, this.handleBlurEvent, true);
   }
 
   removeAllListeners() {
