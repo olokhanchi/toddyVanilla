@@ -45,19 +45,18 @@ export default class TaskView {
     });
   }
 
-  saveNewTaskItem() {
+  saveTaskItem() {
     this.taskField.setAttribute('contenteditable', false);
-    this.taskField.removeAttribute('new');
     this.taskField.parentNode.setAttribute('data-task-id', this.taskId);
     this.taskField.parentNode.classList.remove('scaleX');
     this.taskValue = this.taskField.innerText;
   }
 
-  // taskItemEdit() {
-  //   this.taskField.setAttribute('contenteditable', true);
-  //   this.taskField.parentNode.setAttribute('draggable', false);
-  //   U.moveCursorToEnd(this.taskField);
-  // }
+  taskItemEdit() {
+    this.taskField.setAttribute('contenteditable', true);
+    this.taskField.parentNode.setAttribute('draggable', false);
+    U.moveCursorToEnd(this.taskField);
+  }
 
   // blockNameEdit() {
   //   this.currentBlockNameField.setAttribute('contenteditable', true);

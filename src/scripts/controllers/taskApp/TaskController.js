@@ -3,6 +3,7 @@ export default class TaskController {
     this.model = model;
     this.view = view;
     this.type = null; // todo, doing or done
+    this.existingTask = null;
 
     this.taskAppFirstRun();
   }
@@ -39,21 +40,34 @@ export default class TaskController {
     this.view.changeBtnMode(mode);
   }
 
-  saveNewTaskAction() {
-    console.log(this.type);
-    const id = this.model.createTaskId();
-    this.view.taskId = id;
+  saveTaskAction() {
     this.view.resetBtnView();
-    this.view.saveNewTaskItem();
+    const id = this.existingTask ? this.view.taskId : this.model.createTaskId();
+    this.view.taskId = id;
+    this.view.saveTaskItem();
     const description = this.view.taskValue;
-    this.model.addTaskToDb(this.type, {
-      id: id,
-      description: description.replace(/\n/g, '<br>'),
-    });
+
+    if (this.existingTask) {
+      this.model.updateTask(this.type, id, description);
+    } else {
+      this.model.addTaskToDb(this.type, {
+        id: id,
+        description: description.replace(/\n/g, '<br>'),
+      });
+    }
   }
-  editExistingTaskAction() {}
-  editExistingTaskCancelAction() {}
+
+  editExistingTaskAction() {
+    this.view.taskItemEdit();
+    this.view.changeBtnMode('cancel');
+  }
+
   saveExistingTaskAction() {}
+
+  editExistingTaskCancelAction() {
+    this.view.changeBtnMode('add');
+    this.view.taskItemEdit();
+  }
 
   clearAllTasksAction() {
     console.log(this.type);
