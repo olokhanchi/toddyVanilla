@@ -28,17 +28,12 @@ export default class TaskEventController {
     const addBtnRoleNewTask = this.addBtnRole === 'newTask';
 
     if (targetIsAddBtn && addBtnRoleNewTask) {
-      this.assignViewCurrentElements(target, 'click');
-
-      if (this.addBtnMode === 'save') return this.saveTaskEffect();
-
-      this.assignControllerObjectTypeField(target, 'click');
-
       this.mouseOnAddBtn = true;
 
+      this.assignViewCurrentElements(target, 'click');
+      this.assignControllerObjectTypeField(target, 'click');
+
       this.eventTarget = target;
-      U.addEvent('mouseout', this.eventTarget, this.handleOverOutEvent);
-      U.addEvent('mouseover', this.eventTarget, this.handleOverOutEvent);
 
       switch (this.addBtnMode) {
         case 'add':
@@ -68,7 +63,6 @@ export default class TaskEventController {
 
   handleOverOut() {
     this.mouseOnAddBtn = !this.mouseOnAddBtn;
-    console.log(this.mouseOnAddBtn);
   }
 
   handleInput({ target }) {
@@ -76,10 +70,7 @@ export default class TaskEventController {
 
     if (targetIsTaskField) {
       this.assignViewCurrentElements(target, 'input');
-      if (!target.textContent.trim()) {
-        this.emptyTaskValueEffect();
-        return;
-      }
+      if (!target.textContent.trim()) return this.emptyTaskValueEffect();
       this.fillTaskValueEffect();
     }
   }
@@ -89,12 +80,17 @@ export default class TaskEventController {
     const targetIsTaskField = target.hasAttribute('data-task-field');
 
     if (targetIsTaskField && !this.hasDoubleClick) {
-      this.mouseOnAddBtn = true;
+      this.hasDoubleClick = true;
       this.assignViewCurrentElements(target, 'dbclick');
       this.assignControllerObjectTypeField(target, 'dbclick');
-
-      this.hasDoubleClick = true;
       this.editTaskEffect();
+    }
+
+    if (targetIsBlockName && !this.hasDoubleClick) {
+      this.hasDoubleClick = true;
+      this.assignViewCurrentElements(target, 'dbclick');
+      this.assignControllerObjectTypeField(target, 'dbclick');
+      this.editBlockNameEffect();
     }
   }
 
@@ -103,8 +99,7 @@ export default class TaskEventController {
     const targetIsBlockNameField = target.hasAttribute('data-block-name');
 
     if (targetIsTaskField) {
-      U.removeEvent('mouseover', this.eventTarget, this.handleOverOutEvent);
-      U.removeEvent('mouseout', this.eventTarget, this.handleOverOutEvent);
+      this.hasDoubleClick = false;
     }
 
     if (targetIsTaskField && !this.mouseOnAddBtn) {
@@ -122,13 +117,16 @@ export default class TaskEventController {
   //USER EVENTS ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
   //USER EVENT EFFECTS ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+
   addTaskEffect() {
+    U.addEvent('mouseover', this.eventTarget, this.handleOverOutEvent);
+    U.addEvent('mouseout', this.eventTarget, this.handleOverOutEvent);
     this.controller.addNewTaskAction();
     this.addBtnMode = 'delete';
   }
 
   cancelTaskEffect() {
-    this.view.editExistingTaskCancelAction();
+    this.controller.editExistingTaskCancelAction();
     this.addBtnMode = 'add';
   }
 
@@ -143,20 +141,27 @@ export default class TaskEventController {
   }
 
   saveTaskEffect() {
+    U.removeEvent('mouseover', this.eventTarget, this.handleOverOutEvent);
+    U.removeEvent('mouseout', this.eventTarget, this.handleOverOutEvent);
     this.controller.saveTaskAction();
     this.addBtnMode = 'add';
+    this.mouseOnAddBtn = false;
   }
 
   editTaskEffect() {
-    this.controller.editExistingTaskAction();
+    U.addEvent('mouseover', this.eventTarget, this.handleOverOutEvent);
+    U.addEvent('mouseout', this.eventTarget, this.handleOverOutEvent);
     this.addBtnMode = 'cancel';
+    this.controller.editExistingTaskAction();
+    this.mouseOnAddBtn = false;
   }
 
-  saveNewTaskEffect() {}
-
   deleteTaskEffect() {
+    U.removeEvent('mouseover', this.eventTarget, this.handleOverOutEvent);
+    U.removeEvent('mouseout', this.eventTarget, this.handleOverOutEvent);
     this.controller.deleteNewTaskAction();
     this.addBtnMode = 'add';
+    this.mouseOnAddBtn = false;
   }
 
   clearAllTasksEffect() {
@@ -165,6 +170,7 @@ export default class TaskEventController {
   }
 
   editBlockNameEffect() {
+    this.controller.blockNameEditAction();
     this.addBtnMode = 'cancel';
     this.addBtnRole = 'saveBlockName';
   }
@@ -185,11 +191,10 @@ export default class TaskEventController {
   assignControllerObjectTypeField(target, eventType) {
     if (eventType === 'click') {
       this.controller.type = target.dataset.btnType;
-      this.controller.existingTask = null;
     }
     if (eventType === 'dbclick') {
       this.controller.type = target.closest('[data-task-block]').dataset.type;
-      this.controller.existingTask = true;
+      this.controller.existingTask = target.hasAttribute('data-task-field') ? true : null;
     }
   }
 
@@ -202,9 +207,15 @@ export default class TaskEventController {
       this.view.taskField = target;
     }
     if (eventType === 'dbclick') {
-      this.view.taskField = target;
+      if (target.hasAttribute('data-task-field')) {
+        this.view.taskField = target;
+        this.view.taskId = Number(target.parentNode.dataset.taskId);
+        this.view.currentClickedContent = target.parentNode.parentNode;
+      } else {
+        this.view.blockNameField = target;
+      }
       this.view.addBtn = target.closest('[data-task-block]').querySelector('[data-btn-add]');
-      this.view.taskId = Number(target.parentNode.dataset.taskId);
+      this.eventTarget = this.view.addBtn;
     }
   }
 

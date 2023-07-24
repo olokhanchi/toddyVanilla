@@ -76,6 +76,10 @@ export default class TaskModel {
     return this.storage.getData(type)?.data;
   }
 
+  getDefaultHeaderPropFromDB(type) {
+    return this.storage.getData(type)?.properties;
+  }
+
   createTaskId() {
     return new Date().getTime();
   }

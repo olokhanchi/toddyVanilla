@@ -18,8 +18,10 @@ export default class TaskController {
           break;
         case true:
           this.model.overwriteTaskDataModel(taskType);
-          const tasks = this.model.getDefaultTasksFromDB(taskType);
-          this.view.renderDefaultTasks(taskType, tasks);
+          const task = this.model.getDefaultTasksFromDB(taskType);
+          const headerProp = this.model.getDefaultHeaderPropFromDB(taskType);
+          this.view.renderDefaultTasks(taskType, task);
+          this.view.renderDefaultHeaders(taskType, headerProp);
       }
     }
   }
@@ -55,6 +57,8 @@ export default class TaskController {
         description: description.replace(/\n/g, '<br>'),
       });
     }
+
+    this.existingTask = null;
   }
 
   editExistingTaskAction() {
@@ -62,20 +66,18 @@ export default class TaskController {
     this.view.changeBtnMode('cancel');
   }
 
-  saveExistingTaskAction() {}
-
   editExistingTaskCancelAction() {
     this.view.changeBtnMode('add');
-    this.view.taskItemEdit();
   }
 
   clearAllTasksAction() {
-    console.log(this.type);
     this.view.clearAllTasks(this.type);
     this.model.clearAllTasks(this.type);
   }
 
-  blockNameEditAction() {}
+  blockNameEditAction() {
+    this.view.blockNameEdit()
+  }
   blockNameEditCancelAction() {}
   blockNameSaveAction() {}
   //ACTIONS ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
