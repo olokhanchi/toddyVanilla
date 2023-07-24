@@ -17,7 +17,7 @@ export default class TaskView {
     this.taskField = null;
     this.taskId = null;
     this.taskValue = null;
-    this.currentBlockNameField = null;
+    this.blockNameField = null;
   }
 
   renderDefaultTasks(type, tasks) {
@@ -26,6 +26,14 @@ export default class TaskView {
       taskItemsArray.push(U.taskTemplate(task.id, task.description, this.defaultTaskTitle));
     }
     this[type].insertAdjacentHTML('afterbegin', taskItemsArray.join(''));
+  }
+
+  renderDefaultHeaders(taskType, headerProp) {
+    const $ = this[taskType + 'Block'];
+    const emoji = $.querySelector('[data-btn-emoji]');
+    const name = $.querySelector('[data-block-name]');
+    emoji.innerText = headerProp.emoji;
+    name.innerText = headerProp.name;
   }
 
   showTaskField(contentType) {
@@ -58,10 +66,10 @@ export default class TaskView {
     U.moveCursorToEnd(this.taskField);
   }
 
-  // blockNameEdit() {
-  //   this.currentBlockNameField.setAttribute('contenteditable', true);
-  //   U.moveCursorToEnd(this.currentBlockNameField);
-  // }
+  blockNameEdit() {
+    this.blockNameField.setAttribute('contenteditable', true);
+    U.moveCursorToEnd(this.blockNameField);
+  }
 
   // blockNameSave() {
   //   this.currentBlockNameField.setAttribute('contenteditable', false);
