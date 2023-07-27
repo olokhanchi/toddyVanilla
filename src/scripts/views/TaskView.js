@@ -66,14 +66,21 @@ export default class TaskView {
     U.moveCursorToEnd(this.taskField);
   }
 
+  taskItemCancelEdit() {
+    this.taskField.setAttribute('contenteditable', false);
+    this.taskField.parentNode.setAttribute('draggable', true);
+  }
+
   blockNameEdit() {
     this.blockNameField.setAttribute('contenteditable', true);
+    this.blockNameField.setAttribute('title', 'Block name');
     U.moveCursorToEnd(this.blockNameField);
   }
 
-  // blockNameSave() {
-  //   this.currentBlockNameField.setAttribute('contenteditable', false);
-  // }
+  blockNameSave() {
+    this.blockNameField.setAttribute('title', 'Double click to edit');
+    this.blockNameField.setAttribute('contenteditable', false);
+  }
 
   clearAllTasks(type) {
     this[type].innerHTML = '';
