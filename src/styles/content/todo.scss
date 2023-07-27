@@ -64,6 +64,11 @@
     box-shadow: 0 1px var(--t-color-2);
     transition: box-shadow 0.2s;
   }
+
+  &[contenteditable='true']:empty:not(:focus):before {
+    content: attr(data-pl);
+    opacity: 0.7;
+  }
 }
 
 .task-block_emoji {

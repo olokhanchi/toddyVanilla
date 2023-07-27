@@ -4,25 +4,27 @@ export default class TaskController {
     this.view = view;
     this.type = null; // todo, doing or done
     this.existingTask = null;
+    this.existingTaskId = null;
+    this.taskValue = null;
 
     this.taskAppFirstRun();
   }
 
   taskAppFirstRun() {
     for (const taskType of this.model.taskTypes) {
+      let tasks;
       switch (this.model.taskDataCheck(taskType)) {
         case false:
           this.model.addTaskDataTemplateToDB(taskType);
-          const defaultTasks = this.model.getTasks(taskType);
-          this.view.renderDefaultTasks(taskType, defaultTasks);
+          tasks = this.model.getTasks(taskType);
           break;
         case true:
           this.model.overwriteTaskDataModel(taskType);
-          const task = this.model.getDefaultTasksFromDB(taskType);
-          const headerProp = this.model.getDefaultHeaderPropFromDB(taskType);
-          this.view.renderDefaultTasks(taskType, task);
-          this.view.renderDefaultHeaders(taskType, headerProp);
+          tasks = this.model.getDefaultTasksFromDB(taskType);
       }
+      const headerProp = this.model.getDefaultHeaderPropFromDB(taskType);
+      this.view.renderDefaultTasks(taskType, tasks);
+      this.view.renderDefaultHeaders(taskType, headerProp);
     }
   }
 
@@ -32,14 +34,14 @@ export default class TaskController {
     this.view.changeBtnMode('delete');
   }
 
-  deleteNewTaskAction() {
+  deleteTaskAction() {
     this.view.deleteTaskField();
     this.view.changeBtnMode('add');
     this.view.resetBtnView();
-  }
-
-  changeViewBtnModeAction(mode) {
-    this.view.changeBtnMode(mode);
+    if (this.existingTask) {
+      const id = Number(this.existingTaskId);
+      this.model.removeTaskfromDb(this.type, id);
+    }
   }
 
   saveTaskAction() {
@@ -61,6 +63,10 @@ export default class TaskController {
     this.existingTask = null;
   }
 
+  changeViewBtnModeAction(mode) {
+    this.view.changeBtnMode(mode);
+  }
+
   editExistingTaskAction() {
     this.view.taskItemEdit();
     this.view.changeBtnMode('cancel');
@@ -68,6 +74,7 @@ export default class TaskController {
 
   editExistingTaskCancelAction() {
     this.view.changeBtnMode('add');
+    this.view.taskItemCancelEdit();
   }
 
   clearAllTasksAction() {
@@ -76,9 +83,15 @@ export default class TaskController {
   }
 
   blockNameEditAction() {
-    this.view.blockNameEdit()
+    this.view.blockNameEdit();
+    this.view.changeBtnMode('cancel');
   }
-  blockNameEditCancelAction() {}
-  blockNameSaveAction() {}
+
+  blockNameSaveAction() {
+    this.view.blockNameSave();
+    this.view.changeBtnMode('add');
+    const newName = this.view.blockNameField.innerText;
+    this.model.changeTaskBlockName(this.type, newName);
+  }
   //ACTIONS ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 }
