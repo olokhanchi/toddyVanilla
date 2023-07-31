@@ -44,11 +44,19 @@ export default class U {
   }
 
   static addEvent(type, element, handler, capture = false) {
-    element?.addEventListener(type, handler, capture);
+    if (element) {
+      element.addEventListener(type, handler, capture);
+    } else {
+      document.addEventListener(type, handler);
+    }
   }
 
   static removeEvent(type, element, handler) {
-    element?.removeEventListener(type, handler);
+    if (element) {
+      element.removeEventListener(type, handler);
+    } else {
+      document.removeEventListener(type, handler);
+    }
     // console.log(`${type} - event removed on ${element} element`);
   }
 }
