@@ -3,25 +3,25 @@ import babel from 'vite-plugin-babel';
 
 export default defineConfig({
   build: {
-    outDir: 'dist', // Директория для сохранения собранного проекта
-    assetsDir: '', // Директория для статических ресурсов (например, изображения)
-    sourcemap: false, // Генерация sourcemaps для отладки
-    minify: true, // Минимизация и оптимизация кода
+    outDir: 'dist',
+    assetsDir: '',
+    sourcemap: false, 
+    minify: true,
     terserOptions: {
       compress: {
-        drop_console: true, // Удалить все console.log
+        drop_console: true,
       },
       format: {
-        comments: false, // Удалить все комментарии
+        comments: false,
       },
       keep_classnames: false,
       keep_fnames: false,
     },
-    target: 'es2015', // Целевая версия ECMAScript
-    cssCodeSplit: true, // Разделение CSS на отдельные файлы
-    assetsInlineLimit: 4096, // Пороговое значение размера файлов, которые будут инлайниться в HTML
-    chunkSizeWarningLimit: 500, // Пороговое значение размера чанков, при котором будет выдано предупреждение
-    brotliSize: false, // Включение/отключение генерации размера файлов в формате Brotli
+    target: 'es2015', 
+    cssCodeSplit: true, 
+    assetsInlineLimit: 4096, 
+    chunkSizeWarningLimit: 500, 
+    brotliSize: false,
 
     // Алиасы для резолвинга модулей
     alias: {

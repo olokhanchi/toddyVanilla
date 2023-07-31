@@ -12,6 +12,7 @@
   --br-m: 10px;
   --br-x: 15px;
   --br-xl: 20px;
+  --bg-color-d: #aa311c;
 
   /* Text color */
   --t-color-0: #000000;
@@ -24,16 +25,15 @@
   --t-color-active: #000000;
 
   /* Shadow */
-  --shadow-i-main: inset 5px 5px 9px rgba(0, 0, 0, 0.1),
-    inset -5px -5px 9px rgba(255, 255, 255, 0.45);
-  --shadow-o-main: 5px 5px 9px rgba(0, 0, 0, 0.1),
-    -5px -5px 9px rgba(255, 255, 255, 0.45);
-  --shadow-o-secondary: 5px 5px 5px rgba(0, 0, 0, 0.05),
-    -5px -5px 5px rgba(255, 255, 255, 0.2);
-  --shadow-o-hover: 5px 5px 9px rgba(0, 0, 0, 0.1),
-    -5px -5px 9px rgba(255, 255, 255, 0.624);
-  --text-shadow: 5px 5px 9px rgba(0, 0, 0, 0.1),
-    -5px -5px 9px rgba(255, 255, 255, 0.45);
+  --shadow-i-main: inset 5px 5px 9px rgba(0, 0, 0, 0.1), inset -5px -5px 9px rgba(255, 255, 255, 0.45);
+  --shadow-o-main: 5px 5px 9px rgba(0, 0, 0, 0.1), -5px -5px 9px rgba(255, 255, 255, 0.45);
+  --shadow-o-secondary: 5px 5px 5px rgba(0, 0, 0, 0.05), -5px -5px 5px rgba(255, 255, 255, 0.2);
+  --shadow-o-hover: 5px 5px 9px rgba(0, 0, 0, 0.1), -5px -5px 9px rgba(255, 255, 255, 0.624);
+  --text-shadow: 5px 5px 9px rgba(0, 0, 0, 0.1), -5px -5px 9px rgba(255, 255, 255, 0.45);
+
+
+  --animate-duration: 400ms;
+  --animate-delay: 0.5s;
 }
 
 .dark {
@@ -47,6 +47,7 @@
   --br-m: 10px;
   --br-x: 15px;
   --br-xl: 20px;
+  --bg-color-d: #aa311c;
 
   /* Text color */
   --t-color-0: #ffffff;
@@ -60,14 +61,9 @@
   /* Shadow */
   --shadow-null: inset 0 0 0 rgba(0, 0, 0, 0), inset -0 -0 0 rgba(50, 50, 50, 0);
 
-  --shadow-i-main: inset 4px 4px 8px rgba(0, 0, 0, 0.2),
-    inset -4px -4px 8px rgba(50, 50, 50, 0.15);
-  --shadow-o-main: 4px 4px 8px rgba(0, 0, 0, 0.4),
-    -4px -4px 8px rgba(255, 255, 255, 0.15);
-  --shadow-o-secondary: 4px 4px 8px rgba(0, 0, 0, 0.2),
-    -4px -4px 8px rgba(50, 50, 50, 0.15);
-  --shadow-o-hover: 4px 4px 8px rgba(0, 0, 0, 0.3),
-    -4px -4px 8px rgba(50, 50, 50, 0.3);
-  --text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4),
-    -4px -4px 8px rgba(80, 80, 80, 0.15);
+  --shadow-i-main: inset 4px 4px 8px rgba(0, 0, 0, 0.2), inset -4px -4px 8px rgba(50, 50, 50, 0.15);
+  --shadow-o-main: 4px 4px 8px rgba(0, 0, 0, 0.4), -4px -4px 8px rgba(255, 255, 255, 0.15);
+  --shadow-o-secondary: 4px 4px 8px rgba(0, 0, 0, 0.2), -4px -4px 8px rgba(50, 50, 50, 0.15);
+  --shadow-o-hover: 4px 4px 8px rgba(0, 0, 0, 0.3), -4px -4px 8px rgba(50, 50, 50, 0.3);
+  --text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4), -4px -4px 8px rgba(80, 80, 80, 0.15);
 }

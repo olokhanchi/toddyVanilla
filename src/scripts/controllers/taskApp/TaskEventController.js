@@ -16,9 +16,11 @@ export default class TaskEventController {
     this.handleInputEvent = this.handleInput.bind(this);
     this.handleBlurEvent = this.handleBlur.bind(this);
     this.handleOverOutEvent = this.handleOverOut.bind(this);
+    this.handleKeyDownEvent = this.handleKeyDown.bind(this);
+    this.handleKeyUpEvent = this.handleKeyUp.bind(this);
     this.eventTarget = null;
-    this.prevBlockName = '';
     this.blockNameIsEmpty = false;
+    this.ctrlKey = false;
 
     this.bindListeners();
   }
@@ -27,9 +29,9 @@ export default class TaskEventController {
   handleClick({ target, ctrlKey }) {
     const targetIsAddBtn = target.hasAttribute('data-btn-add');
     const targetIsClearAllBtn = target.hasAttribute('data-btn-clear-all');
+    const targetIsTaskItem = target.hasAttribute('data-task-id') || target.hasAttribute('data-task-field');
     const addBtnRoleNewTask = this.addBtnRole === 'newTask';
-    
-    console.log(ctrlKey);
+
     if (targetIsAddBtn && addBtnRoleNewTask) {
       this.mouseOnAddBtn = true;
 
@@ -63,6 +65,12 @@ export default class TaskEventController {
       } else {
         throw new Error(`There are no methods for ${this.addBtnMode} action`);
       }
+    }
+
+    if (targetIsTaskItem && ctrlKey) {
+      this.assignViewCurrentElements(target, 'ctrlClick');
+      this.assignControllerObjectTypeField(target, 'ctrlClick');
+      this.deleteTaskEffect();
     }
 
     if (targetIsClearAllBtn) {
@@ -128,6 +136,21 @@ export default class TaskEventController {
       } else {
         this.deleteTaskEffect();
       }
+    }
+  }
+
+  handleKeyDown(e) {
+    if (e.key === 'Enter') e.preventDefault();
+    if (e.key === 'Control') {
+      this.ctrlKey = true;
+      this.deleteTaskModeToggleEffect();
+    }
+  }
+
+  handleKeyUp({ key }) {
+    if (key === 'Control') {
+      this.ctrlKey = false;
+      this.deleteTaskModeToggleEffect();
     }
   }
   //USER EVENTS ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
@@ -200,12 +223,21 @@ export default class TaskEventController {
     }
   }
 
+  deleteTaskModeToggleEffect() {
+    if (this.addBtnMode === 'add' && this.addBtnRole === 'newTask') this.controller.modeToggler();
+  }
+
   //USER EVENT EFFECTS ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
   //EVENT SETTERS FOR VIEW & CONTROLLER ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
   assignControllerObjectTypeField(target, eventType) {
     if (eventType === 'click') {
       this.controller.type = target.dataset.btnType;
+    }
+    if (eventType === 'ctrlClick') {
+      this.controller.type = target.closest('[data-task-block]').dataset.type;
+      this.controller.existingTask = true;
+      this.controller.existingTaskId = target.dataset.taskId;
     }
     if (eventType === 'dbclick') {
       this.controller.type = target.closest('[data-task-block]').dataset.type;
@@ -218,6 +250,9 @@ export default class TaskEventController {
     if (eventType === 'click') {
       this.view.addBtn = target;
       this.view.currentClickedContent = target.parentNode.nextElementSibling;
+    }
+    if (eventType === 'ctrlClick') {
+      this.view.taskField = target.firstChild;
     }
     if (eventType === 'dbclick') {
       if (target.hasAttribute('data-task-field')) {
@@ -240,6 +275,8 @@ export default class TaskEventController {
     U.addEvent('dblclick', this.view.wrapper, this.handleDoubleClickEvent);
     U.addEvent('input', this.view.wrapper, this.handleInputEvent);
     U.addEvent('blur', this.view.wrapper, this.handleBlurEvent, true);
+    U.addEvent('keydown', '', this.handleKeyDownEvent);
+    U.addEvent('keyup', '', this.handleKeyUpEvent);
   }
 
   removeAllListeners() {
@@ -247,6 +284,8 @@ export default class TaskEventController {
     U.removeEvent('dblclick', this.view.wrapper, this.handleDoubleClickEvent);
     U.removeEvent('input', this.view.wrapper, this.handleInputEvent);
     U.removeEvent('focusout', this.view.wrapper, this.handleBlurEvent);
+    U.removeEvent('keydown', '', this.handleKeyDownEvent);
+    U.removeEvent('keyup', '', this.handleKeyDownEvent);
   }
   //ON APP INIT OR DESTROY ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 }

@@ -2,7 +2,11 @@ export default class TaskController {
   constructor(model, view) {
     this.model = model;
     this.view = view;
+
+    this.taskTypes = this.model.taskTypes;
+
     this.type = null; // todo, doing or done
+    this.btnMode = 'add';
     this.existingTask = null;
     this.existingTaskId = null;
     this.taskValue = null;
@@ -11,7 +15,7 @@ export default class TaskController {
   }
 
   taskAppFirstRun() {
-    for (const taskType of this.model.taskTypes) {
+    for (const taskType of this.taskTypes) {
       let tasks;
       switch (this.model.taskDataCheck(taskType)) {
         case false:
@@ -31,21 +35,22 @@ export default class TaskController {
   //ACTIONS ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
   addNewTaskAction() {
     this.view.showTaskField(this.type);
-    this.view.changeBtnMode('delete');
+    this.view.changeBtnMode('delete', this.type);
   }
 
   deleteTaskAction() {
-    this.view.deleteTaskField();
-    this.view.changeBtnMode('add');
-    this.view.resetBtnView();
     if (this.existingTask) {
       const id = Number(this.existingTaskId);
       this.model.removeTaskfromDb(this.type, id);
+    } else {
+      this.view.changeBtnMode('add', this.type);
     }
+    this.view.resetBtnView(this.type);
+    this.view.deleteTaskField();
   }
 
   saveTaskAction() {
-    this.view.resetBtnView();
+    this.view.resetBtnView(this.type);
     const id = this.existingTask ? this.view.taskId : this.model.createTaskId();
     this.view.taskId = id;
     this.view.saveTaskItem();
@@ -64,16 +69,16 @@ export default class TaskController {
   }
 
   changeViewBtnModeAction(mode) {
-    this.view.changeBtnMode(mode);
+    this.view.changeBtnMode(mode, this.type);
   }
 
   editExistingTaskAction() {
     this.view.taskItemEdit();
-    this.view.changeBtnMode('cancel');
+    this.view.changeBtnMode('cancel', this.type);
   }
 
   editExistingTaskCancelAction() {
-    this.view.changeBtnMode('add');
+    this.view.changeBtnMode('add', this.type);
     this.view.taskItemCancelEdit();
   }
 
@@ -84,14 +89,18 @@ export default class TaskController {
 
   blockNameEditAction() {
     this.view.blockNameEdit();
-    this.view.changeBtnMode('cancel');
+    this.view.changeBtnMode('cancel', this.type);
   }
 
   blockNameSaveAction() {
     this.view.blockNameSave();
-    this.view.changeBtnMode('add');
+    this.view.changeBtnMode('add', this.type);
     const newName = this.view.blockNameField.innerText;
     this.model.changeTaskBlockName(this.type, newName);
+  }
+
+  modeToggler() {
+    this.view.toggleTaskDeleteMode();
   }
   //ACTIONS ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 }

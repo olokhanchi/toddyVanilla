@@ -43,3 +43,8 @@ li {
 .btn {
   cursor: pointer;
 }
+
+li object svg path#todo {
+  width: 50px;
+  fill: rgb(254, 50, 50) !important; /* Здесь вы можете указать нужный вам цвет */
+}

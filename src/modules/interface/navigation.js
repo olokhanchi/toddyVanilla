@@ -19,7 +19,6 @@ export default class Navigation {
       if (content) {
         this.changeContentTo(content);
         document.title = Utils.capitalize(content);
-        window.location.hash = content;
 
         btns.forEach((btn) => {
           btn.classList.toggle('active', btn.attributes[0].value === content);
@@ -31,7 +30,7 @@ export default class Navigation {
   changeContentTo(content = this.activeContent) {
     this.content.forEach((c) => {
       let isActive = c.attributes[0].value !== content;
-      
+
       c.classList.toggle('hide', isActive);
       c.classList.add(this.animateClass);
     });

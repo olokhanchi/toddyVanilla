@@ -12,12 +12,18 @@ export default class TaskView {
     this.doing = this.doingBlock?.querySelector('[data-content]');
     this.done = this.doneBlock?.querySelector('[data-content]');
 
+    this.todoAddBtn = this.todoBlock?.querySelector('[data-btn-add]');
+    this.doingAddBtn = this.doingBlock?.querySelector('[data-btn-add]');
+    this.doneAddBtn = this.doneBlock?.querySelector('[data-btn-add]');
+
     this.taskTemplate = U.taskTemplate('', '', 'New task', true);
     this.addBtn = null;
     this.taskField = null;
     this.taskId = null;
     this.taskValue = null;
     this.blockNameField = null;
+
+    // item-delete-mode
   }
 
   renderDefaultTasks(type, tasks) {
@@ -46,16 +52,16 @@ export default class TaskView {
     this.taskField.parentNode.remove();
   }
 
-  resetBtnView() {
-    document.querySelectorAll('[data-btn-add]').forEach((btn) => {
-      btn.innerText = '+add';
-      btn.style.removeProperty('color');
-    });
+  resetBtnView(type) {
+    const btn = this[type + 'AddBtn'];
+    btn.innerText = '+add';
+    btn.style.removeProperty('color');
   }
 
   saveTaskItem() {
     this.taskField.setAttribute('contenteditable', false);
     this.taskField.parentNode.setAttribute('data-task-id', this.taskId);
+    this.taskField.parentNode.setAttribute('title', this.defaultTaskTitle);
     this.taskField.parentNode.classList.remove('scaleX');
     this.taskValue = this.taskField.innerText;
   }
@@ -86,23 +92,28 @@ export default class TaskView {
     this[type].innerHTML = '';
   }
 
-  changeBtnMode(mode) {
+  toggleTaskDeleteMode() {
+    this.wrapper.classList.toggle('item-delete-mode');
+  }
+
+  changeBtnMode(mode, type) {
+    const btn = this[type + 'AddBtn'];
     switch (mode) {
       case 'add':
-        this.addBtn.innerText = '+' + mode;
-        this.addBtn.style.removeProperty('color');
+        btn.textContent = '+' + mode;
+        btn.style.removeProperty('color');
         break;
       case 'delete':
-        this.addBtn.innerText = '✗ ' + mode;
-        this.addBtn.style.color = 'var(--t-color-4)';
+        btn.innerText = '✗ ' + mode;
+        btn.style.color = 'var(--t-color-4)';
         break;
       case 'save':
-        this.addBtn.innerText = '✓ ' + mode;
-        this.addBtn.style.color = '#009f0b';
+        btn.innerText = '✓ ' + mode;
+        btn.style.color = '#009f0b';
         break;
       case 'cancel':
-        this.addBtn.innerText = mode;
-        this.addBtn.style.color = 'var(--t-color-3)';
+        btn.innerText = mode;
+        btn.style.color = 'var(--t-color-3)';
         break;
     }
   }
