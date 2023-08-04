@@ -21,8 +21,6 @@ export default class TaskEventController {
     this.eventTarget = null;
     this.blockNameIsEmpty = false;
     this.ctrlKey = false;
-
-    this.bindListeners();
   }
 
   //USER EVENTS ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
