@@ -1,10 +1,10 @@
-import Storage from '../storage/db';
+import Model from './Model';
 
-export default class TaskModel {
+export default class TaskModel extends Model {
   taskTypes = ['todo', 'doing', 'done'];
 
   constructor() {
-    this.storage = new Storage();
+    super();
 
     this.todo = {
       properties: { name: 'todo', emoji: '😭' },
@@ -20,16 +20,8 @@ export default class TaskModel {
     };
   }
 
-  taskDataCheck(type) {
-    return !!this.storage.getData(type);
-  }
-
   addTaskDataTemplateToDB(type) {
     this.storage.addData(type, this[type]);
-  }
-
-  overwriteTaskDataModel(type) {
-    this[type] = this.storage.getData(type);
   }
 
   addTaskToDb(type, value) {
@@ -53,10 +45,6 @@ export default class TaskModel {
   clearAllTasks(type) {
     this[type].data = [];
     this.updateLocalStorage(type);
-  }
-
-  updateLocalStorage(type) {
-    this.storage.addData(type, this[type]);
   }
 
   getTasks(type) {

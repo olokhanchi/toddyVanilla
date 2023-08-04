@@ -15,7 +15,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  transition: box-shadow 0.5s;
+  // transition: box-shadow 0.5s;
 }
 
 body {
@@ -44,7 +44,3 @@ li {
   cursor: pointer;
 }
 
-li object svg path#todo {
-  width: 50px;
-  fill: rgb(254, 50, 50) !important; /* Здесь вы можете указать нужный вам цвет */
-}

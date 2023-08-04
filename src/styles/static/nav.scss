@@ -3,10 +3,12 @@
 .menu-items {
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
-  padding: 30px 0;
+  // flex: 1 1 auto;
+  margin: 20px 0 0;
+  padding: 10px 0 10px;
   gap: 10px;
- 
+  border-top: 1px solid var(--main-color);
+  border-bottom: 1px solid var(--main-color);
 }
 
 .menu-item {
@@ -15,19 +17,14 @@
   height: 38px;
   border-radius: 5px;
   padding: 10px;
+  transition: background 0.3s;
   &:hover {
-    background: #303030;
+    background: #28282885;
+    transition: background 0.3s;
   }
   &.active {
     cursor: auto;
     background: var(--nav-btn-active);
-    &:active {
-      transform: scale(1);
-    }
-  }
-  &:active {
-    transform: scale(0.98);
+    transition: background 0.3s;
   }
 }
-
-

@@ -57,6 +57,7 @@
   font-weight: bold;
   cursor: text;
   outline: none;
+  box-shadow: none;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -129,10 +130,12 @@
   border-radius: $br-x;
   box-shadow: var(--shadow-o-secondary);
   justify-content: flex-start;
-  transition: box-shadow 0.5s;
+  // transition: box-shadow 0.5s;
   align-items: center;
   font-size: 18px;
   word-break: break-word;
+  outline: 3px solid transparent;
+  transition: outline 0.3s;
 
   .task-item_text {
     font-size: 18px;
@@ -154,12 +157,13 @@
 
   &:hover {
     box-shadow: var(--shadow-o-hover);
-    transition: box-shadow 0.5s;
+    transition: box-shadow 0.3s linear;
   }
 
   &:has([contenteditable='true']) {
     box-shadow: var(--shadow-o-hover);
     outline: 2px solid var(--t-color-2);
+    transition: outline 0.3s;
   }
 }
 
