@@ -12,23 +12,23 @@
         <nav class="nav">
           <div class="logo"></div>
           <ul class="menu-items" data-nav-btns="main">
-            <li data-main-btn="todo" class="menu-item" title="Todo App!">
+            <li data-nav-btn="task" data-main-btn class="menu-item" title="Todo App!">
               <img src="./src/img/task.svg" alt="" />
             </li>
-            <li data-main-btn="timers" class="menu-item" title="Timer App!">
+            <li data-nav-btn="timers" data-main-btn class="menu-item" title="Timer App!">
               <img src="./src/img/timers.svg" alt="" />
             </li>
-            <li data-main-btn="weather" class="menu-item" title="Weather App!">
+            <li data-nav-btn="weather" data-main-btn class="menu-item" title="Weather App!">
               <img src="./src/img/weather.svg" alt="" />
             </li>
-            <li data-main-btn="yesno" class="menu-item" title="YesNo App!">
+            <li data-nav-btn="yesno" data-main-btn class="menu-item" title="YesNo App!">
               <img src="./src/img/idea.svg" alt="" />
             </li>
           </ul>
         </nav>
 
         <div id="pages">
-          <main data-main-content="todo" class="content todo" id="todo">
+          <main data-main-content="task" class="content todo" id="todo">
             <div data-todo-wrapper class="task-wrapper">
               <div class="task-block" data-task-block data-type="todo">
                 <div class="task-block_header">
@@ -88,19 +88,19 @@
             <div class="timer-wrapper">
               <nav class="timer-nav">
                 <ul data-nav-btns="timers" class="timer-nav_btns">
-                  <li data-timer-btn="alarm" class="nav-btn active">
+                  <li data-nav-btn="alarm" data-timers-btn class="nav-btn active">
                     <div class="i-s i-alarm"></div>
                     <div class="label">Alarm clock</div>
                   </li>
-                  <li data-timer-btn="timer" class="nav-btn">
+                  <li data-nav-btn="timer" data-timers-btn class="nav-btn">
                     <div class="i-s i-timer"></div>
                     <div class="label">Timer</div>
                   </li>
-                  <li data-timer-btn="stopwatch" class="nav-btn">
+                  <li data-nav-btn="stopwatch" data-timers-btn class="nav-btn">
                     <div class="i-s i-swatch"></div>
                     <div class="label">Stopwatch</div>
                   </li>
-                  <li data-timer-btn="pomodoro" class="nav-btn">
+                  <li data-nav-btn="pomodoro" data-timers-btn class="nav-btn">
                     <div class="i-s i-pomodoro"></div>
                     <div class="label">Pomodoro</div>
                   </li>
