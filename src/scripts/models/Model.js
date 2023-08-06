@@ -5,11 +5,11 @@ export default class Model {
     this.storage = new Storage();
   }
 
-  taskDataCheck(type) {
+  dataCheck(type) {
     return !!this.storage.getData(type);
   }
 
-  overwriteTaskDataModel(type) {
+  overwriteDataModel(type) {
     this[type] = this.storage.getData(type);
   }
 

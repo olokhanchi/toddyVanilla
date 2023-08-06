@@ -17,13 +17,13 @@ export default class TaskController {
   taskAppFirstRun() {
     for (const taskType of this.taskTypes) {
       let tasks;
-      switch (this.model.taskDataCheck(taskType)) {
+      switch (this.model.dataCheck(taskType)) {
         case false:
           this.model.addTaskDataTemplateToDB(taskType);
           tasks = this.model.getTasks(taskType);
           break;
         case true:
-          this.model.overwriteTaskDataModel(taskType);
+          this.model.overwriteDataModel(taskType);
           tasks = this.model.getDefaultTasksFromDB(taskType);
       }
       const headerProp = this.model.getDefaultHeaderPropFromDB(taskType);
