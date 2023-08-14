@@ -24,5 +24,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const interfaceModel = new InterfaceModel(defaultTheme);
   const interfaceView = new InterfaceView();
-  const interfaceController = new InterfaceController(interfaceView, navigations, interfaceModel, { task, weather });
+  const interfaceController = new InterfaceController(
+    interfaceView,
+    navigations,
+    interfaceModel,
+    { task, weather },
+    'dark'
+  );
 });

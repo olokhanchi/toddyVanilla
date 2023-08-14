@@ -18,9 +18,18 @@ export default class TaskEventController {
     this.handleOverOutEvent = this.handleOverOut.bind(this);
     this.handleKeyDownEvent = this.handleKeyDown.bind(this);
     this.handleKeyUpEvent = this.handleKeyUp.bind(this);
+
+    this.handleDragStartEvent = this.handleDragStart.bind(this);
+    this.handleDragEndEvent = this.handleDragEnd.bind(this);
+    this.handleDragEnterEvent = this.handleDragEnter.bind(this);
+    this.handleDropEvent = this.handleDrop.bind(this);
+
     this.eventTarget = null;
     this.blockNameIsEmpty = false;
     this.ctrlKey = false;
+
+    this.draggingElement = null;
+    this.dragEntredElement = null;
   }
 
   //USER EVENTS ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
@@ -151,6 +160,32 @@ export default class TaskEventController {
       this.deleteTaskModeToggleEffect();
     }
   }
+
+  handleDragStart({ target }) {
+    console.log(target);
+  }
+
+  handleDragEnd({ target }) {
+    console.log(target);
+  }
+
+  handleDragEnter({ target }) {
+    if (target.hasAttribute('draggable')) {
+      console.log(target.dataset.taskId);
+    }
+
+    // console.log(target.getBoundingClientRect().height);
+
+    // if (target.hasAttribute('data-task-id')) {
+    //   console.log(target);
+    // }
+  }
+  handleDrop(e) {
+    if (e.target.hasAttribute('data-content')) {
+      console.log('Drop', e.target);
+    }
+  }
+
   //USER EVENTS ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
   //USER EVENT EFFECTS ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
@@ -199,6 +234,13 @@ export default class TaskEventController {
     this.controller.deleteTaskAction();
     this.addBtnMode = 'add';
     this.mouseOnAddBtn = false;
+  }
+
+  dragStartEffect(target) {
+    this.view.taskItemDragging();
+  }
+  dragEndEffect() {
+    this.view.taskItemDragging();
   }
 
   clearAllTasksEffect() {
@@ -275,7 +317,13 @@ export default class TaskEventController {
     U.addEvent('blur', this.view.wrapper, this.handleBlurEvent, true);
     U.addEvent('keydown', '', this.handleKeyDownEvent);
     U.addEvent('keyup', '', this.handleKeyUpEvent);
+    U.addEvent('dragstart', this.view.wrapper, this.handleDragStartEvent);
+    U.addEvent('dragend', this.view.wrapper, this.handleDragEndEvent);
+    U.addEvent('dragenter', this.view.wrapper, this.handleDragEnterEvent, true);
+    U.addEvent('drop', this.view.wrapper, this.handleDropEvent, true);
   }
+
+  // this.handleDropEvent = this.handleDrop.bind(this);
 
   removeAllListeners() {
     U.removeEvent('click', this.view.wrapper, this.handleClickEvent);
