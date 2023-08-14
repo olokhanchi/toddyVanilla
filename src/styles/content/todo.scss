@@ -130,12 +130,30 @@
   border-radius: $br-x;
   box-shadow: var(--shadow-o-secondary);
   justify-content: flex-start;
-  // transition: box-shadow 0.5s;
   align-items: center;
   font-size: 18px;
   word-break: break-word;
   outline: 3px solid transparent;
   transition: outline 0.3s;
+  background-color: var(--main-bg-color);
+  position: relative;
+
+  .top,
+  .bottom {
+    background-color: #01de141b;
+    position: absolute;
+    width: 100%;
+    margin-left: -10px;
+    height: 50%;
+    pointer-events: none;
+  }
+
+  & .top {
+    top: 0;
+  }
+  & .bottom {
+    bottom: 0;
+  }
 
   .task-item_text {
     font-size: 18px;
@@ -236,4 +254,11 @@
 
 .task-block:has(.task-item) h3 {
   display: none;
+}
+
+.dragging {
+  .top,
+  .bottom {
+    pointer-events: all;
+  }
 }

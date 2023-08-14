@@ -16,6 +16,8 @@ export default class TaskView {
     this.doingAddBtn = this.doingBlock?.querySelector('[data-btn-add]');
     this.doneAddBtn = this.doneBlock?.querySelector('[data-btn-add]');
 
+    this.draggingTaskItem = null;
+
     this.taskTemplate = U.taskTemplate('', '', 'New task', true);
     this.addBtn = null;
     this.taskField = null;
@@ -62,6 +64,7 @@ export default class TaskView {
     this.taskField.setAttribute('contenteditable', false);
     this.taskField.parentNode.setAttribute('data-task-id', this.taskId);
     this.taskField.parentNode.setAttribute('title', this.defaultTaskTitle);
+    this.taskField.parentNode.setAttribute('draggable', true);
     this.taskField.parentNode.classList.remove('scaleX');
     this.taskValue = this.taskField.innerText;
   }
@@ -75,6 +78,10 @@ export default class TaskView {
   taskItemCancelEdit() {
     this.taskField.setAttribute('contenteditable', false);
     this.taskField.parentNode.setAttribute('draggable', true);
+  }
+
+  taskItemDragging() {
+    this.wrapper.classList.toggle('dragging');
   }
 
   blockNameEdit() {

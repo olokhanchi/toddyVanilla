@@ -20,7 +20,8 @@ export default class InterfaceView {
     });
   }
 
-  switchTheme(theme = 'dark') {
+  switchTheme(theme) {
+    this.root.classList = '';
     this.root.classList.toggle(theme);
   }
 }

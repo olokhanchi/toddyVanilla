@@ -1,7 +1,7 @@
 import U from '../helpers/utils';
 
 export default class InterfaceController {
-  constructor(view, navigations, model, apps, theme = 'dark') {
+  constructor(view, navigations, model, apps, theme) {
     this.view = view;
     this.model = model;
     this.apps = apps;
@@ -9,7 +9,7 @@ export default class InterfaceController {
 
     this.navigationBtnsContainers = {};
     this.defaultTheme = theme;
-    this.themeSwitcher = document.querySelector('theme');
+    this.themeSwitcher = document.querySelector('.theme input');
 
     this.appFirstRun();
   }
@@ -32,21 +32,16 @@ export default class InterfaceController {
     switch (this.model.dataCheck('theme')) {
       case true:
         const currentTheme = this.model.getThemeFromDB();
-        this.view.switchTheme(currentTheme);
-        this.themeSwitcher.querySelector('input').checked = true;
+        this.switchThemeAction(currentTheme);
         break;
       case false:
         this.model.addThemeToDB(this.defaultTheme);
-        this.view.switchTheme(this.defaultTheme);
+        this.switchThemeAction(this.defaultTheme);
         break;
     }
 
-    this.apps['task']?.bindListeners();
-
-    this.view.switchContent('main', 'task');
-    this.view.switchContent('timers', 'alarm');
-    this.view.activeBtn('main', 'task');
-    this.view.activeBtn('timers', 'alarm');
+    this.switchContentAction('main', 'task');
+    this.switchContentAction('timers', 'alarm');
   }
 
   handleClick({ target }) {
@@ -55,21 +50,32 @@ export default class InterfaceController {
       const navTab = target.closest('[data-nav-btns]');
       const page = navTab.dataset.navBtns;
       const content = navBtn.dataset.navBtn;
-      this.view.switchContent(page, content);
-      this.view.activeBtn(page, content);
+      this.switchContentAction(page, content);
     }
   }
 
   handleChange({ target }) {
-    let themeName;
-    if (target.checked) {
-      themeName = 'dark';
-      target.checked = false;
+    const isLight = !target.checked;
+    if (isLight) {
+      this.switchThemeAction('light');
     } else {
-      themeName = 'light';
+      this.switchThemeAction('dark');
     }
+  }
 
-    this.model.addThemeToDB(themeName);
-    this.view.switchTheme();
+  switchThemeAction(theme) {
+    this.view.switchTheme(theme);
+    this.model.addThemeToDB(theme);
+    this.themeSwitcher.checked = theme === 'dark' ? true : false;
+  }
+
+  switchContentAction(page, content) {
+    this.view.switchContent(page, content);
+    this.view.activeBtn(page, content);
+    try {
+      this.apps[content]?.bindListeners();
+    } catch {
+      console.log(`the method bindListeners() is not defined for the ${content}`);
+    }
   }
 }
