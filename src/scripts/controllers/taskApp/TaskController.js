@@ -11,6 +11,11 @@ export default class TaskController {
     this.existingTaskId = null;
     this.taskValue = null;
 
+    this.draggingTaskItem = null;
+    this.draggingTaskItemId = null;
+    this.dragStartZone = null;
+    this.dragEndZone = null;
+
     this.taskAppFirstRun();
   }
 
@@ -99,8 +104,33 @@ export default class TaskController {
     this.model.changeTaskBlockName(this.type, newName);
   }
 
-  modeToggler() {
+  taskItemMoveAction(eventType, target) {
+    switch (eventType) {
+      case 'dragStart':
+        this.draggingTaskItem = target;
+        this.draggingTaskItemId = Number(target.dataset.taskId);
+        this.dragStartZone = target.closest('[data-content]').dataset.content;
+        this.view.taskItemMove(this.draggingTaskItem);
+        break;
+      case 'dragEnd':
+        this.view.taskItemMove(this.draggingTaskItem);
+        this.view.taskItemDrop(target, this.dragEndZone);
+        this.model.moveTask(this.dragStartZone, this.dragEndZone, this.draggingTaskItemId);
+        break;
+      case 'dragEnter':
+        const zone = target.dataset.content;
+        this.view.taskItemOverLeaveZone(zone);
+        break;
+      case 'dragLeave':
+        this.dragEndZone = target.dataset.content;
+        this.view.taskItemOverLeaveZone(this.dragEndZone);
+        break;
+    }
+  }
+
+  itemDeleteOnCtrlAction() {
     this.view.toggleTaskDeleteMode();
   }
+
   //ACTIONS ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 }

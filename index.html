@@ -10,7 +10,9 @@
     <div id="app">
       <div class="container">
         <nav class="nav">
-          <div class="logo"></div>
+          <div class="logo">
+            <img src="./src/img/logo.svg" alt="" />
+          </div>
           <ul class="menu-items" data-nav-btns="main">
             <li data-nav-btn="task" data-main-btn class="menu-item" title="Todo App!">
               <img src="./src/img/task.svg" alt="" />
@@ -42,7 +44,7 @@
                   ></div>
                   <button data-btn-add data-btn-type="todo" class="task-block_add-btn">+add</button>
                 </div>
-                <div data-content class="task-block_content"></div>
+                <div data-content="todo" class="task-block_content"></div>
                 <div class="task-block_footer">
                   <button data-btn-clear-all data-btn-type="todo" class="task-block_delete-btn">clear all</button>
                 </div>
@@ -59,7 +61,7 @@
                   ></div>
                   <button data-btn-add data-btn-type="doing" class="task-block_add-btn">+add</button>
                 </div>
-                <div data-content class="task-block_content"></div>
+                <div data-content="doing" class="task-block_content"></div>
                 <div class="task-block_footer">
                   <button data-btn-clear-all data-btn-type="doing" class="task-block_delete-btn">clear all</button>
                 </div>
@@ -76,7 +78,7 @@
                   ></div>
                   <button data-btn-add data-btn-type="done" class="task-block_add-btn">+add</button>
                 </div>
-                <div data-content class="task-block_content"></div>
+                <div data-content="done" class="task-block_content"></div>
                 <div class="task-block_footer">
                   <button data-btn-clear-all data-btn-type="done" class="task-block_delete-btn">clear all</button>
                 </div>
@@ -89,19 +91,19 @@
               <nav class="timer-nav">
                 <ul data-nav-btns="timers" class="timer-nav_btns">
                   <li data-nav-btn="alarm" data-timers-btn class="nav-btn active">
-                    <div class="i-s i-alarm"></div>
+                    <img src="./src/img/alarm.svg" alt="" />
                     <div class="label">Alarm clock</div>
                   </li>
                   <li data-nav-btn="timer" data-timers-btn class="nav-btn">
-                    <div class="i-s i-timer"></div>
+                    <img src="./src/img/timer.svg" alt="" />
                     <div class="label">Timer</div>
                   </li>
                   <li data-nav-btn="stopwatch" data-timers-btn class="nav-btn">
-                    <div class="i-s i-swatch"></div>
+                    <img src="./src/img/stopwatch.svg" alt="" />
                     <div class="label">Stopwatch</div>
                   </li>
                   <li data-nav-btn="pomodoro" data-timers-btn class="nav-btn">
-                    <div class="i-s i-pomodoro"></div>
+                    <img src="./src/img/pomodoro.svg" alt="" />
                     <div class="label">Pomodoro</div>
                   </li>
                 </ul>
@@ -831,6 +833,45 @@
             </label>
           </div>
         </aside>
+      </div>
+      <div open class="emoji-modal">
+        <span class="modal-name">Select emoji for <b>todo</b> board</span>
+        <div class="emojis">
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+          <div class="emoji">🥺</div>
+        </div>
+        <button class="close-btn">close</button>
       </div>
     </div>
     <script type="module" src="./main.js"></script>

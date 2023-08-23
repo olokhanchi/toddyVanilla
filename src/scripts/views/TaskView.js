@@ -17,6 +17,7 @@ export default class TaskView {
     this.doneAddBtn = this.doneBlock?.querySelector('[data-btn-add]');
 
     this.draggingTaskItem = null;
+    this.draggingZone = null;
 
     this.taskTemplate = U.taskTemplate('', '', 'New task', true);
     this.addBtn = null;
@@ -40,7 +41,7 @@ export default class TaskView {
     const $ = this[taskType + 'Block'];
     const emoji = $.querySelector('[data-btn-emoji]');
     const name = $.querySelector('[data-block-name]');
-    emoji.innerText = headerProp.emoji;
+    emoji.innerHTML = headerProp.emoji;
     name.innerText = headerProp.name;
   }
 
@@ -80,8 +81,17 @@ export default class TaskView {
     this.taskField.parentNode.setAttribute('draggable', true);
   }
 
-  taskItemDragging() {
-    this.wrapper.classList.toggle('dragging');
+  taskItemMove(item) {
+    item.classList.toggle('dragging');
+  }
+
+  taskItemDrop(item, dragEndZone) {
+    console.log(dragEndZone);
+    this[dragEndZone].insertAdjacentElement('afterbegin', item);
+  }
+
+  taskItemOverLeaveZone(dragZone) {
+    this[dragZone].classList.toggle('dragging-zone');
   }
 
   blockNameEdit() {

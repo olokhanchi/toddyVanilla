@@ -22,14 +22,11 @@ export default class TaskEventController {
     this.handleDragStartEvent = this.handleDragStart.bind(this);
     this.handleDragEndEvent = this.handleDragEnd.bind(this);
     this.handleDragEnterEvent = this.handleDragEnter.bind(this);
-    this.handleDropEvent = this.handleDrop.bind(this);
+    this.handleDragLeaveEvent = this.handleDragLeave.bind(this);
 
     this.eventTarget = null;
     this.blockNameIsEmpty = false;
     this.ctrlKey = false;
-
-    this.draggingElement = null;
-    this.dragEntredElement = null;
   }
 
   //USER EVENTS ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
@@ -37,6 +34,7 @@ export default class TaskEventController {
     const targetIsAddBtn = target.hasAttribute('data-btn-add');
     const targetIsClearAllBtn = target.hasAttribute('data-btn-clear-all');
     const targetIsTaskItem = target.hasAttribute('data-task-id') || target.hasAttribute('data-task-field');
+    const targetIsEmojiBtn = target.hasAttribute('data-btn-emoji');
     const addBtnRoleNewTask = this.addBtnRole === 'newTask';
 
     if (targetIsAddBtn && addBtnRoleNewTask) {
@@ -63,7 +61,6 @@ export default class TaskEventController {
         default:
           throw new Error(`There are no methods for ${this.addBtnMode} action`);
       }
-      return;
     }
 
     if (targetIsAddBtn && !addBtnRoleNewTask) {
@@ -84,6 +81,10 @@ export default class TaskEventController {
       this.assignViewCurrentElements(target, 'click');
       this.assignControllerObjectTypeField(target, 'click');
       this.clearAllTasksEffect();
+    }
+
+    if (targetIsEmojiBtn) {
+      console.log(target);
     }
   }
 
@@ -147,8 +148,9 @@ export default class TaskEventController {
   }
 
   handleKeyDown(e) {
-    if (e.key === 'Enter') e.preventDefault();
-    if (e.key === 'Control') {
+    const key = e.key;
+    if (key === 'Enter') e.preventDefault();
+    if (key === 'Control') {
       this.ctrlKey = true;
       this.deleteTaskModeToggleEffect();
     }
@@ -162,27 +164,25 @@ export default class TaskEventController {
   }
 
   handleDragStart({ target }) {
-    console.log(target);
+    this.controller.taskItemMoveAction('dragStart', target);
   }
 
   handleDragEnd({ target }) {
-    console.log(target);
+    this.controller.taskItemMoveAction('dragEnd', target);
   }
 
   handleDragEnter({ target }) {
-    if (target.hasAttribute('draggable')) {
-      console.log(target.dataset.taskId);
+    const targetContent = target.closest('[data-content]');
+
+    if (targetContent) {
+      this.controller.taskItemMoveAction('dragEnter', targetContent);
     }
-
-    // console.log(target.getBoundingClientRect().height);
-
-    // if (target.hasAttribute('data-task-id')) {
-    //   console.log(target);
-    // }
   }
-  handleDrop(e) {
-    if (e.target.hasAttribute('data-content')) {
-      console.log('Drop', e.target);
+  handleDragLeave({ target }) {
+    const targetContent = target.closest('[data-content]');
+
+    if (targetContent) {
+      this.controller.taskItemMoveAction('dragLeave', targetContent);
     }
   }
 
@@ -236,13 +236,6 @@ export default class TaskEventController {
     this.mouseOnAddBtn = false;
   }
 
-  dragStartEffect(target) {
-    this.view.taskItemDragging();
-  }
-  dragEndEffect() {
-    this.view.taskItemDragging();
-  }
-
   clearAllTasksEffect() {
     this.controller.clearAllTasksAction();
     this.addBtnMode = 'add';
@@ -264,7 +257,7 @@ export default class TaskEventController {
   }
 
   deleteTaskModeToggleEffect() {
-    if (this.addBtnMode === 'add' && this.addBtnRole === 'newTask') this.controller.modeToggler();
+    if (this.addBtnMode === 'add' && this.addBtnRole === 'newTask') this.controller.itemDeleteOnCtrlAction();
   }
 
   //USER EVENT EFFECTS ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
@@ -273,16 +266,19 @@ export default class TaskEventController {
   assignControllerObjectTypeField(target, eventType) {
     if (eventType === 'click') {
       this.controller.type = target.dataset.btnType;
+      return;
     }
     if (eventType === 'ctrlClick') {
       this.controller.type = target.closest('[data-task-block]').dataset.type;
       this.controller.existingTask = true;
       this.controller.existingTaskId = target.dataset.taskId;
+      return;
     }
     if (eventType === 'dbclick') {
       this.controller.type = target.closest('[data-task-block]').dataset.type;
       this.controller.existingTask = target.hasAttribute('data-task-field') ? true : null;
       this.controller.existingTaskId = target.parentNode.dataset.taskId;
+      return;
     }
   }
 
@@ -319,11 +315,9 @@ export default class TaskEventController {
     U.addEvent('keyup', '', this.handleKeyUpEvent);
     U.addEvent('dragstart', this.view.wrapper, this.handleDragStartEvent);
     U.addEvent('dragend', this.view.wrapper, this.handleDragEndEvent);
-    U.addEvent('dragenter', this.view.wrapper, this.handleDragEnterEvent, true);
-    U.addEvent('drop', this.view.wrapper, this.handleDropEvent, true);
+    U.addEvent('dragenter', this.view.wrapper, this.handleDragEnterEvent);
+    U.addEvent('dragleave', this.view.wrapper, this.handleDragLeaveEvent);
   }
-
-  // this.handleDropEvent = this.handleDrop.bind(this);
 
   removeAllListeners() {
     U.removeEvent('click', this.view.wrapper, this.handleClickEvent);
@@ -332,6 +326,10 @@ export default class TaskEventController {
     U.removeEvent('focusout', this.view.wrapper, this.handleBlurEvent);
     U.removeEvent('keydown', '', this.handleKeyDownEvent);
     U.removeEvent('keyup', '', this.handleKeyDownEvent);
+    U.removeEvent('dragstart', this.view.wrapper, this.handleDragStartEvent);
+    U.removeEvent('dragend', this.view.wrapper, this.handleDragEndEvent);
+    U.removeEvent('dragenter', this.view.wrapper, this.handleDragEnterEvent);
+    U.removeEvent('dragleave', this.view.wrapper, this.handleDragLeaveEvent);
   }
   //ON APP INIT OR DESTROY ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 }
