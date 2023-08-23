@@ -119,6 +119,8 @@
   padding: 20px 15px;
   gap: 15px;
   overflow-x: auto;
+  outline: 2px dashed transparent;
+  outline-offset: -3px;
 }
 
 .task-item {
@@ -137,10 +139,11 @@
   transition: outline 0.3s;
   background-color: var(--main-bg-color);
   position: relative;
+  transition: margin 0.3s ease;
 
   .top,
   .bottom {
-    background-color: #01de141b;
+    // background-color: #01de141b;
     position: absolute;
     width: 100%;
     margin-left: -10px;
@@ -256,9 +259,17 @@
   display: none;
 }
 
+.dragging-zone {
+  outline: 2px dashed var(--t-color-2);
+  outline-offset: -3px;
+  transition: outline 0.3s ease-in-out;
+}
 .dragging {
-  .top,
-  .bottom {
-    pointer-events: all;
-  }
+  opacity: 0.4;
+  background-color: var(--main-color);
+  cursor: grabbing !important;
+  cursor: move !important;
+  cursor: -webkit-grabbing !important;
+  cursor: -moz-grabbing !important;
+  cursor: grabbing !important;
 }

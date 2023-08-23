@@ -7,7 +7,7 @@ export default class TaskModel extends Model {
     super();
 
     this.todo = {
-      properties: { name: 'todo', emoji: '😭' },
+      properties: { name: 'todo', emoji: '&#128586' },
       data: [],
     };
     this.doing = {
@@ -58,6 +58,14 @@ export default class TaskModel extends Model {
       }
     });
     this.updateLocalStorage(type);
+  }
+
+  moveTask(from, to, id) {
+    const movingTask = this.getTasks(from).find((task) => task.id === id);
+    this[from].data = this.getTasks(from).filter((task) => task.id !== id);
+    this[to].data.unshift(movingTask);
+    this.updateLocalStorage(from);
+    this.updateLocalStorage(to);
   }
 
   getDefaultTasksFromDB(type) {
