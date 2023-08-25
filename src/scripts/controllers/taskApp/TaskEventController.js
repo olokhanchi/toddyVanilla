@@ -84,7 +84,7 @@ export default class TaskEventController {
     }
 
     if (targetIsEmojiBtn) {
-      console.log(target);
+      this.controller.changeEmojiAction(target);
     }
   }
 
@@ -164,7 +164,9 @@ export default class TaskEventController {
   }
 
   handleDragStart({ target }) {
-    this.controller.taskItemMoveAction('dragStart', target);
+    if (target.hasAttribute('draggable')) {
+      this.controller.taskItemMoveAction('dragStart', target);
+    }
   }
 
   handleDragEnd({ target }) {

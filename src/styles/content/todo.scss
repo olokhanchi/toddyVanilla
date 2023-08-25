@@ -62,7 +62,7 @@
   overflow: hidden;
   white-space: nowrap;
   &[contenteditable='true'] {
-    box-shadow: 0 1px var(--t-color-2);
+    box-shadow: 0 2px var(--t-color-2);
     transition: box-shadow 0.2s;
   }
 
@@ -140,23 +140,6 @@
   background-color: var(--main-bg-color);
   position: relative;
   transition: margin 0.3s ease;
-
-  .top,
-  .bottom {
-    // background-color: #01de141b;
-    position: absolute;
-    width: 100%;
-    margin-left: -10px;
-    height: 50%;
-    pointer-events: none;
-  }
-
-  & .top {
-    top: 0;
-  }
-  & .bottom {
-    bottom: 0;
-  }
 
   .task-item_text {
     font-size: 18px;

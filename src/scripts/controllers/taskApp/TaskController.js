@@ -1,3 +1,6 @@
+import Modal from '../../components/modal';
+import U from '../../helpers/utils';
+
 export default class TaskController {
   constructor(model, view) {
     this.model = model;
@@ -15,6 +18,8 @@ export default class TaskController {
     this.draggingTaskItemId = null;
     this.dragStartZone = null;
     this.dragEndZone = null;
+
+    this.popupContent = U.emojiGenerate(this.model.emojiCodes);
 
     this.taskAppFirstRun();
   }
@@ -114,6 +119,7 @@ export default class TaskController {
         break;
       case 'dragEnd':
         this.view.taskItemMove(this.draggingTaskItem);
+        if (this.dragStartZone === this.dragEndZone) return;
         this.view.taskItemDrop(target, this.dragEndZone);
         this.model.moveTask(this.dragStartZone, this.dragEndZone, this.draggingTaskItemId);
         break;
@@ -130,6 +136,20 @@ export default class TaskController {
 
   itemDeleteOnCtrlAction() {
     this.view.toggleTaskDeleteMode();
+  }
+
+  changeEmojiAction(target) {
+    const viewBlockName = target.nextElementSibling.innerText;
+    const modelBlockName = target.nextElementSibling.dataset.nameType;
+    const modalHeader = `Select emoji for <b>${viewBlockName}</b> board`;
+    const popupSelector = '[data-popup]';
+
+    const emojiModal = new Modal(popupSelector, target, this.popupContent, modalHeader, (emoji) => {
+      target.innerText = emoji;
+      this.model.changeTaskBlockEmoji(modelBlockName, emoji);
+    });
+
+    emojiModal.open();
   }
 
   //ACTIONS ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
