@@ -27,6 +27,8 @@ export default class TaskEventController {
     this.eventTarget = null;
     this.blockNameIsEmpty = false;
     this.ctrlKey = false;
+
+    this.blockHasTaskField = false;
   }
 
   //USER EVENTS ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
@@ -149,10 +151,22 @@ export default class TaskEventController {
 
   handleKeyDown(e) {
     const key = e.key;
-    if (key === 'Enter') e.preventDefault();
+    if (key === 'Enter') {
+      e.preventDefault();
+      this.addBtnMode === 'delete' ? this.deleteTaskEffect() : this.saveTaskEffect();
+    }
     if (key === 'Control') {
       this.ctrlKey = true;
       this.deleteTaskModeToggleEffect();
+    }
+    if (e.keyCode > 48 && e.keyCode < 52 && e.altKey && !this.blockHasTaskField) {
+      this.mouseOnAddBtn = true;
+      const taskTypes = ['todo', 'doing', 'done'];
+      this.controller.type = taskTypes[Number(key) - 1];
+      this.addTaskEffect();
+    }
+    if (key === 'Escape') {
+      this.deleteTaskEffect();
     }
   }
 
@@ -197,6 +211,7 @@ export default class TaskEventController {
     U.addEvent('mouseout', this.eventTarget, this.handleOverOutEvent);
     this.controller.addNewTaskAction();
     this.addBtnMode = 'delete';
+    this.blockHasTaskField = true;
   }
 
   cancelTaskEffect() {
@@ -214,12 +229,46 @@ export default class TaskEventController {
     this.addBtnMode = 'delete';
   }
 
+  taskManipulateEffect(actionType, addBtnMode, eventTarget) {
+    actionType === 'edit'
+      ? (() => {
+          U.addEvent('mouseover', eventTarget, this.handleOverOutEvent);
+          U.addEvent('mouseout', eventTarget, this.handleOverOutEvent);
+        })()
+      : (() => {
+          U.removeEvent('mouseover', eventTarget, this.handleOverOutEvent);
+          U.removeEvent('mouseout', eventTarget, this.handleOverOutEvent);
+        })();
+
+    this.mouseOnAddBtn = false;
+    this.addBtnMode = addBtnMode;
+
+    switch (actionType) {
+      case 'add':
+        this.controller.addNewTaskAction(eventTarget);
+        break;
+      case 'save':
+        this.controller.saveTaskAction(eventTarget);
+        break;
+      case 'edit':
+        this.controller.editExistingTaskAction(eventTarget);
+        break;
+      case 'delete':
+        this.controller.deleteTaskAction(eventTarget);
+        break;
+
+      default:
+        break;
+    }
+  }
+
   saveTaskEffect() {
     U.removeEvent('mouseover', this.eventTarget, this.handleOverOutEvent);
     U.removeEvent('mouseout', this.eventTarget, this.handleOverOutEvent);
     this.controller.saveTaskAction();
     this.addBtnMode = 'add';
     this.mouseOnAddBtn = false;
+    this.blockHasTaskField = false;
   }
 
   editTaskEffect() {
@@ -236,6 +285,7 @@ export default class TaskEventController {
     this.controller.deleteTaskAction();
     this.addBtnMode = 'add';
     this.mouseOnAddBtn = false;
+    this.blockHasTaskField = false;
   }
 
   clearAllTasksEffect() {

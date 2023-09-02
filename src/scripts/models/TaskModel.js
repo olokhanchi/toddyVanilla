@@ -174,11 +174,13 @@ export default class TaskModel extends Model {
   }
 
   moveTask(from, to, id) {
-    const movingTask = this.getTasks(from).find((task) => task.id === id);
-    this[from].data = this.getTasks(from).filter((task) => task.id !== id);
-    this[to].data.unshift(movingTask);
-    this.updateLocalStorage(from);
-    this.updateLocalStorage(to);
+    if (from && to && id) {
+      const movingTask = this.getTasks(from).find((task) => task.id === id);
+      this[from].data = this.getTasks(from).filter((task) => task.id !== id);
+      this[to].data.unshift(movingTask);
+      this.updateLocalStorage(from);
+      this.updateLocalStorage(to);
+    }
   }
 
   getDefaultTasksFromDB(type) {
