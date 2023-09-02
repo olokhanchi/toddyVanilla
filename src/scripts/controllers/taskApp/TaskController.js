@@ -20,6 +20,7 @@ export default class TaskController {
     this.dragEndZone = null;
 
     this.popupContent = U.emojiGenerate(this.model.emojiCodes);
+    this.emojiModal = null;
 
     this.taskAppFirstRun();
   }

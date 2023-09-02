@@ -22,6 +22,7 @@ export default class Modal {
     this.modal.classList.remove('fadeOut');
     this.modal.classList.remove('hide');
     if (!this.openedEarlier) {
+      this.openedEarlier = true;
       this.modalName.innerHTML = this.modalHeader;
       this.modalContent.innerHTML = this.content;
       this.modal.classList.add('fadeIn');
@@ -30,7 +31,6 @@ export default class Modal {
 
   close() {
     this.modal.classList.add('fadeOut');
-    this.openedEarlier = true;
     const hideTimer = setTimeout(() => {
       this.modal.classList.add('hide');
       clearTimeout(hideTimer);

@@ -1,36 +1,65 @@
 @import '../variables';
 
 .info {
-  justify-content: end;
-  align-items: center;
-  flex-direction: column-reverse;
-  p {
-    font-size: 24px;
+  color: #ffffff;
+  flex-direction: column;
+  justify-content: space-between;
+  user-select: none;
+  .current-date {
     font-weight: bold;
-    color: rgb(255, 255, 255, 0.8);
-    writing-mode: vertical-lr;
-    display: inline-block;
+    font-size: 24px;
+    transform: rotate(270deg);
+    display: flex;
+    width: 100%;
     text-align: center;
-    transform: scale(-1, -1);
+    & * {
+      display: inline-block;
+    }
+  }
+  .time,
+  .date {
+    display: flex;
+  }
+  .seconds {
+    animation: blink 2s infinite;
+    line-height: 23px;
+    color: var(--t-color-2);
+  }
+  @keyframes blink {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
 
+  .day,
+  .minutes,
+  .hours {
+    width: 30px;
+  }
+
+  .day {
+    margin-right: 5px;
+  }
+
+  .month,
+  .weekday,
+  .time {
     &::after {
       content: '/';
       color: var(--t-color-2);
-      margin: 5px 0;
-      font-weight: 900;
+      margin: 0 5px;
     }
   }
-
-  #date {
-    p {
-      &::after {
-        content: '';
-      }
-    }
+  .help {
   }
 
   .theme {
-    margin-bottom: auto;
     height: 38px;
     width: 38px;
 
